@@ -90,7 +90,14 @@ class CongressFetcher:
         bill_type = raw.get("type", "").lower()
         bill_num = raw.get("number", "")
         congress = raw.get("congress", "")
-        url = raw.get("url") or f"https://www.congress.gov/bill/{congress}th-congress/{bill_type}/{bill_num}"
+        # Build human-readable congress.gov URL, not the API endpoint
+        bill_type_slug = {
+            'HR': 'house-bill', 'HJRES': 'house-joint-resolution',
+            'HRES': 'house-resolution', 'HCONRES': 'house-concurrent-resolution',
+            'S': 'senate-bill', 'SJRES': 'senate-joint-resolution',
+            'SRES': 'senate-resolution', 'SCONRES': 'senate-concurrent-resolution',
+        }.get(bill_type.upper(), bill_type.lower())
+        url = f"https://www.congress.gov/bill/{congress}th-congress/{bill_type_slug}/{bill_num}"
         return {
             "id": f"congress-{congress}-{raw.get('type')}-{bill_num}",
             "title": raw.get("title", "Untitled"),
