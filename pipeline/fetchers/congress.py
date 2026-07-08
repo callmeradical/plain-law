@@ -50,7 +50,7 @@ class CongressFetcher:
 
     def fetch(self) -> list:
         params = {
-            "limit": 50,
+            "limit": 250,  # fetch more so we have enough after filtering placeholders
             "sort": "updateDate+desc",
             "format": "json",
         }
