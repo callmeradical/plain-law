@@ -2,6 +2,7 @@
 Publisher — renders summaries to Markdown/HTML and pushes to GitHub Pages.
 """
 
+import json
 import subprocess
 import logging
 import tempfile
@@ -45,7 +46,10 @@ class Publisher:
                 f.write(f"| Field | Value |\n")
                 f.write(f"|-------|-------|\n")
                 f.write(f"| **Source** | {bill['source']} |\n")
-                f.write(f"| **Status** | {bill.get('status', 'Unknown')} |\n")
+                status_str = bill.get('status', 'Unknown')
+                if bill.get('status_date'):
+                    status_str += f" *(as of {bill['status_date']})*"
+                f.write(f"| **Status** | {status_str} |\n")
                 if bill.get('url'):
                     f.write(f"| **Official text** | [{bill['url']}]({bill['url']}) |\n")
                 f.write(f"| **Tags** | {', '.join(bill.get('tags', []))} |\n")
@@ -57,9 +61,47 @@ class Publisher:
         # Write index
         self._write_index(results, date_str)
 
+        # Write bills.json manifest for the static UI
+        self._write_bills_json(results)
+
         # Push to GitHub Pages
         if self.gh_pages.get("enabled"):
             self._push_github_pages(date_str)
+
+    def _write_bills_json(self, results: list):
+        """Write bills.json manifest for the static SPA filter UI."""
+        entries = []
+        for r in results:
+            bill = r["bill"]
+            source_locale = r.get("source", {})
+            summary = r["summary"]
+
+            # Derive level from source locale type field
+            level = source_locale.get("type", "federal")
+
+            # Build relative file path
+            safe_id = bill["id"].replace("/", "-").replace(" ", "_")
+            file_path = f"{safe_id}.md"
+
+            entry = {
+                "id": bill.get("id", ""),
+                "title": bill.get("title", ""),
+                "summary": summary,
+                "status": bill.get("status", ""),
+                "status_date": bill.get("status_date", ""),
+                "source": bill.get("source", source_locale.get("name", "")),
+                "url": bill.get("url", ""),
+                "level": level,
+                "state": source_locale.get("state", ""),
+                "tags": bill.get("tags", []),
+                "file": file_path,
+            }
+            entries.append(entry)
+
+        out_path = OUTPUT_DIR / "bills.json"
+        with open(out_path, "w") as f:
+            json.dump(entries, f, indent=2, ensure_ascii=False)
+        logging.info(f"Wrote {len(entries)} entries to {out_path}")
 
     def _write_index(self, results: list, date_str: str):
         index_path = OUTPUT_DIR / "index.md"
@@ -98,6 +140,10 @@ class Publisher:
                 # Copy output files
                 for f in OUTPUT_DIR.glob("*.md"):
                     shutil.copy(f, tmpdir)
+                # Copy bills.json if present
+                bills_json = OUTPUT_DIR / "bills.json"
+                if bills_json.exists():
+                    shutil.copy(bills_json, tmpdir)
                 # Commit and push
                 subprocess.run(["git", "-C", tmpdir, "add", "."], check=True)
                 subprocess.run(["git", "-C", tmpdir, "commit", "-m", commit_msg], check=True)

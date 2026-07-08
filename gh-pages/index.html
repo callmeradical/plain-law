@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plain Law — Proposed legislation in plain English</title>
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #ffffff;
+      --bg-subtle: #f5f6f7;
+      --bg-card:   #ffffff;
+      --border:    #d0d5db;
+      --text:      #1a1d23;
+      --text-muted:#5c6370;
+      --text-link: #1a5276;
+
+      --federal:   #1a4a8a;
+      --state:     #1e7e34;
+      --county:    #b85a00;
+      --municipal: #5b3a8a;
+
+      --accent:    #1a5276;
+      --accent-bg: #eaf2fb;
+
+      --pill-bg:   #e8ecf0;
+      --pill-sel:  #1a5276;
+      --pill-text-sel: #ffffff;
+
+      --chip-intro-bg:    #dbeafe;
+      --chip-intro-text:  #1e40af;
+      --chip-commit-bg:   #dcfce7;
+      --chip-commit-text: #15803d;
+      --chip-passed-bg:   #fef9c3;
+      --chip-passed-text: #854d0e;
+      --chip-enacted-bg:  #d1fae5;
+      --chip-enacted-text:#065f46;
+      --chip-other-bg:    #f3f4f6;
+      --chip-other-text:  #374151;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    a { color: var(--text-link); }
+    a:hover { text-decoration: underline; }
+
+    /* ── Header ── */
+    header {
+      background: var(--text);
+      color: #fff;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .site-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+      text-decoration: none;
+    }
+    .site-name span { color: #7ec8e3; }
+    .tagline {
+      font-size: 0.85rem;
+      color: #b0b8c4;
+      margin-top: 0.15rem;
+    }
+    nav a {
+      color: #b0b8c4;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    nav a:hover { color: #fff; border-color: #fff; }
+
+    /* ── Disclaimer ── */
+    .disclaimer {
+      background: #fffbeb;
+      border-left: 4px solid #d97706;
+      padding: 0.75rem 1.25rem;
+      font-size: 0.875rem;
+      color: #78350f;
+    }
+    .disclaimer strong { color: #92400e; }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* ── Filter bar ── */
+    .filter-section {
+      background: var(--bg-subtle);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .filter-section .container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .filter-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .filter-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-muted);
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    /* Pills */
+    .pill-group { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .pill {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      background: var(--pill-bg);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid transparent;
+      user-select: none;
+      transition: background 0.12s, color 0.12s;
+      line-height: 1.4;
+    }
+    .pill:hover { background: #d6dce3; color: var(--text); }
+    .pill.active {
+      background: var(--pill-sel);
+      color: var(--pill-text-sel);
+      border-color: var(--pill-sel);
+    }
+    .pill.level-federal.active { background: var(--federal); border-color: var(--federal); }
+    .pill.level-state.active   { background: var(--state);   border-color: var(--state); }
+    .pill.level-county.active  { background: var(--county);  border-color: var(--county); }
+    .pill.level-municipal.active { background: var(--municipal); border-color: var(--municipal); }
+
+    /* Selects */
+    select.filter-select {
+      padding: 0.28rem 0.65rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--text);
+      font-size: 0.82rem;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235c6370'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.55rem center;
+      padding-right: 1.6rem;
+    }
+    select.filter-select:focus { outline: 2px solid var(--accent); }
+
+    /* Reset button */
+    .btn-reset {
+      padding: 0.28rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.12s;
+      white-space: nowrap;
+    }
+    .btn-reset:hover { background: #e5e9ec; color: var(--text); }
+
+    /* Results meta */
+    .results-meta {
+      padding: 1rem 0 0.25rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .results-count { font-weight: 600; color: var(--text); }
+
+    /* ── Bill grid ── */
+    .bills-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      padding: 0.75rem 0 3rem;
+    }
+    @media (min-width: 680px) {
+      .bills-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1000px) {
+      .bills-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* ── Bill card ── */
+    .bill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: box-shadow 0.15s;
+    }
+    .bill-card:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text);
+      flex: 1;
+    }
+
+    /* Level badge */
+    .level-badge {
+      display: inline-block;
+      padding: 0.15rem 0.55rem;
+      border-radius: 4px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #fff;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .badge-federal   { background: var(--federal); }
+    .badge-state     { background: var(--state); }
+    .badge-county    { background: var(--county); }
+    .badge-municipal { background: var(--municipal); }
+
+    .card-meta {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .card-source { font-weight: 500; }
+    .meta-sep { color: #c0c5cc; }
+
+    /* Status chip */
+    .status-chip {
+      display: inline-block;
+      padding: 0.12rem 0.55rem;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .chip-introduced  { background: var(--chip-intro-bg);  color: var(--chip-intro-text); }
+    .chip-committee   { background: var(--chip-commit-bg); color: var(--chip-commit-text); }
+    .chip-passed      { background: var(--chip-passed-bg); color: var(--chip-passed-text); }
+    .chip-enacted     { background: var(--chip-enacted-bg);color: var(--chip-enacted-text);}
+    .chip-other       { background: var(--chip-other-bg);  color: var(--chip-other-text); }
+
+    /* Summary preview */
+    .card-summary {
+      font-size: 0.85rem;
+      color: #374151;
+      line-height: 1.55;
+    }
+    .card-summary .truncated { display: block; }
+    .card-summary .full      { display: none; }
+    .card-summary.expanded .truncated { display: none; }
+    .card-summary.expanded .full      { display: block; }
+    .expand-btn {
+      background: none;
+      border: none;
+      color: var(--text-link);
+      font-size: 0.8rem;
+      cursor: pointer;
+      padding: 0;
+      text-decoration: underline;
+      margin-top: 0.2rem;
+    }
+
+    /* Tags */
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+    .tag-chip {
+      background: #eef0f3;
+      color: #4b5563;
+      font-size: 0.7rem;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+    }
+
+    /* Card actions */
+    .card-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: 0.25rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #154361; text-decoration: none; }
+    .btn-secondary {
+      background: #fff;
+      color: var(--text-muted);
+      border-color: var(--border);
+    }
+    .btn-secondary:hover { background: var(--bg-subtle); color: var(--text); text-decoration: none; }
+
+    /* ── Empty state ── */
+    .empty-state {
+      display: none;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 1rem 0;
+    }
+    .empty-state.visible { display: block; }
+    .empty-state h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--text); }
+
+    /* ── Loading ── */
+    .loading {
+      padding: 3rem;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    /* ── FAQ section ── */
+    #faq {
+      background: var(--bg-subtle);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 0 3rem;
+    }
+    #faq .container h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1.25rem;
+      color: var(--text);
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--text);
+      color: #9ca3af;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+      text-align: center;
+      line-height: 1.8;
+    }
+    footer a { color: #7ec8e3; }
+    footer a:hover { color: #fff; }
+    .footer-disclaimer {
+      max-width: 650px;
+      margin: 0 auto 0.75rem;
+    }
+
+    /* ── Responsive tweaks ── */
+    @media (max-width: 520px) {
+      header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .filter-label { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header>
+  <div>
+    <a href="index.html" class="site-name">Plain<span>Law</span></a>
+    <div class="tagline">Proposed legislation in plain English</div>
+  </div>
+  <nav>
+    <a href="faq.html">About / FAQ</a>
+  </nav>
+</header>
+
+<!-- ── Disclaimer ── -->
+<div class="disclaimer">
+  <strong>⚠️ AI-generated summaries.</strong>
+  These are produced by a local Gemma language model and may contain errors.
+  Every summary links to its <strong>official source</strong> — always verify before acting on this information.
+  This is not legal advice.
+</div>
+
+<!-- ── Filter bar ── -->
+<div class="filter-section" id="filter-section" style="display:none">
+  <div class="container">
+    <div class="filter-row">
+      <span class="filter-label">Level</span>
+      <div class="pill-group" id="level-pills">
+        <span class="pill active" data-level="">All</span>
+        <span class="pill level-federal" data-level="federal">Federal</span>
+        <span class="pill level-state" data-level="state">State</span>
+        <span class="pill level-county" data-level="county">County</span>
+        <span class="pill level-municipal" data-level="municipality">Municipal</span>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:0.5rem;">
+        <select class="filter-select" id="state-select" aria-label="Filter by state">
+          <option value="">All states</option>
+        </select>
+        <select class="filter-select" id="status-select" aria-label="Filter by status">
+          <option value="">All statuses</option>
+          <option value="introduced">Introduced</option>
+          <option value="committee">In Committee</option>
+          <option value="passed">Passed One Chamber</option>
+          <option value="enacted">Enacted</option>
+        </select>
+        <button class="btn-reset" id="reset-btn" title="Clear all filters">✕ Reset</button>
+      </div>
+    </div>
+    <div class="filter-row" id="tag-row" style="display:none">
+      <span class="filter-label">Tags</span>
+      <div class="pill-group" id="tag-pills"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Main content ── -->
+<main class="container">
+  <div class="results-meta" id="results-meta" style="display:none">
+    <span id="results-count" class="results-count">0</span> bills
+  </div>
+
+  <div class="loading" id="loading">Loading bills…</div>
+
+  <div class="bills-grid" id="bills-grid"></div>
+
+  <div class="empty-state" id="empty-state">
+    <h3>No bills match your filters.</h3>
+    <p>Try adjusting or <button class="expand-btn" onclick="resetFilters()">resetting</button> the filter controls above.</p>
+  </div>
+</main>
+
+<!-- ── Footer ── -->
+<footer>
+  <p class="footer-disclaimer">
+    Summaries are AI-generated by a local Gemma model and may contain errors or omissions.
+    Always read the official legislative text before making decisions.
+    This site is not affiliated with any government body and does not provide legal advice.
+  </p>
+  <p>
+    <a href="https://github.com/callmeradical/plain-law">GitHub</a> ·
+    <a href="https://github.com/callmeradical/plain-law/blob/main/CONTRIBUTING.md">Add your locale</a> ·
+    <a href="faq.html">FAQ</a>
+  </p>
+</footer>
+
+<script>
+/* ────────────────────────────────────────────────────────────
+   Plain Law — client-side filter SPA
+   No dependencies. Works fully offline once bills.json loaded.
+   ──────────────────────────────────────────────────────────── */
+
+let allBills = [];
+let activeFilters = {
+  level: '',
+  state: '',
+  status: '',
+  tag: ''
+};
+
+// ── Bootstrap ───────────────────────────────────────────────
+async function init() {
+  try {
+    const resp = await fetch('bills.json');
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    allBills = await resp.json();
+  } catch (err) {
+    document.getElementById('loading').textContent =
+      'Could not load bills.json. ' + (allBills.length === 0
+        ? 'The pipeline may not have run yet.'
+        : err.message);
+    return;
+  }
+
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('filter-section').style.display = '';
+  document.getElementById('results-meta').style.display = '';
+
+  populateDynamicFilters();
+  restoreFiltersFromHash();
+  renderBills();
+
+  bindEvents();
+  window.addEventListener('hashchange', onHashChange);
+}
+
+// ── Dynamic filter population ───────────────────────────────
+function populateDynamicFilters() {
+  // States
+  const stateSet = new Set(allBills.map(b => b.state).filter(Boolean));
+  const stateSelect = document.getElementById('state-select');
+  [...stateSet].sort().forEach(st => {
+    const opt = document.createElement('option');
+    opt.value = st;
+    opt.textContent = st;
+    stateSelect.appendChild(opt);
+  });
+
+  // Tags
+  const tagSet = new Set();
+  allBills.forEach(b => (b.tags || []).forEach(t => tagSet.add(t)));
+  const tagPills = document.getElementById('tag-pills');
+  const allPill = document.createElement('span');
+  allPill.className = 'pill active';
+  allPill.dataset.tag = '';
+  allPill.textContent = 'All';
+  tagPills.appendChild(allPill);
+
+  [...tagSet].sort().forEach(tag => {
+    const p = document.createElement('span');
+    p.className = 'pill';
+    p.dataset.tag = tag;
+    p.textContent = tag;
+    tagPills.appendChild(p);
+  });
+
+  if (tagSet.size > 0) {
+    document.getElementById('tag-row').style.display = '';
+  }
+}
+
+// ── Filter state & hash sync ─────────────────────────────────
+function filtersToHash(f) {
+  const parts = [];
+  if (f.level)  parts.push('level='  + encodeURIComponent(f.level));
+  if (f.state)  parts.push('state='  + encodeURIComponent(f.state));
+  if (f.status) parts.push('status=' + encodeURIComponent(f.status));
+  if (f.tag)    parts.push('tag='    + encodeURIComponent(f.tag));
+  return parts.length ? '#' + parts.join('&') : '#';
+}
+
+function hashToFilters() {
+  const raw = window.location.hash.replace(/^#/, '');
+  const f = { level: '', state: '', status: '', tag: '' };
+  raw.split('&').forEach(part => {
+    const [k, v] = part.split('=');
+    if (k && v !== undefined && f.hasOwnProperty(k)) f[k] = decodeURIComponent(v);
+  });
+  return f;
+}
+
+function restoreFiltersFromHash() {
+  const f = hashToFilters();
+  activeFilters = f;
+  applyFilterUI();
+}
+
+function applyFilterUI() {
+  // Level pills
+  document.querySelectorAll('#level-pills .pill').forEach(p => {
+    p.classList.toggle('active', p.dataset.level === activeFilters.level);
+  });
+  // State select
+  document.getElementById('state-select').value = activeFilters.state;
+  // Status select
+  document.getElementById('status-select').value = activeFilters.status;
+  // Tag pills
+  document.querySelectorAll('#tag-pills .pill').forEach(p => {
+    p.classList.toggle('active', p.dataset.tag === activeFilters.tag);
+  });
+}
+
+function pushHash() {
+  const hash = filtersToHash(activeFilters);
+  history.replaceState(null, '', hash);
+}
+
+function onHashChange() {
+  restoreFiltersFromHash();
+  renderBills();
+}
+
+// ── Rendering ────────────────────────────────────────────────
+function matchesFilters(bill) {
+  const { level, state, status, tag } = activeFilters;
+
+  if (level && bill.level !== level) return false;
+
+  if (state && bill.state !== state) return false;
+
+  if (status) {
+    const s = (bill.status || '').toLowerCase();
+    if (status === 'introduced' && !s.includes('introduc')) return false;
+    if (status === 'committee'  && !s.includes('committee')) return false;
+    if (status === 'passed'     && !(s.includes('passed') || s.includes('agreed'))) return false;
+    if (status === 'enacted'    && !(s.includes('enact') || s.includes('signed') || s.includes('law'))) return false;
+  }
+
+  if (tag && !(bill.tags || []).includes(tag)) return false;
+
+  return true;
+}
+
+function renderBills() {
+  const grid = document.getElementById('bills-grid');
+  const empty = document.getElementById('empty-state');
+  const countEl = document.getElementById('results-count');
+
+  grid.innerHTML = '';
+  const visible = allBills.filter(matchesFilters);
+  countEl.textContent = visible.length;
+
+  if (visible.length === 0) {
+    empty.classList.add('visible');
+    return;
+  }
+  empty.classList.remove('visible');
+
+  visible.forEach(bill => {
+    grid.appendChild(buildCard(bill));
+  });
+}
+
+function buildCard(bill) {
+  const card = document.createElement('article');
+  card.className = 'bill-card';
+
+  // Top row: title + badge
+  const top = document.createElement('div');
+  top.className = 'card-top';
+
+  const title = document.createElement('div');
+  title.className = 'card-title';
+  title.textContent = bill.title || '(Untitled)';
+
+  const badge = document.createElement('span');
+  badge.className = 'level-badge badge-' + (bill.level || 'federal');
+  badge.textContent = bill.level || 'federal';
+
+  top.appendChild(title);
+  top.appendChild(badge);
+
+  // Meta row: source + status chip + date
+  const meta = document.createElement('div');
+  meta.className = 'card-meta';
+
+  const src = document.createElement('span');
+  src.className = 'card-source';
+  src.textContent = bill.source || '';
+  meta.appendChild(src);
+
+  if (bill.status) {
+    const sep = document.createElement('span');
+    sep.className = 'meta-sep';
+    sep.textContent = '·';
+    meta.appendChild(sep);
+
+    const chip = document.createElement('span');
+    chip.className = 'status-chip ' + statusChipClass(bill.status);
+    chip.textContent = bill.status;
+    meta.appendChild(chip);
+  }
+
+  if (bill.status_date) {
+    const sep2 = document.createElement('span');
+    sep2.className = 'meta-sep';
+    sep2.textContent = '·';
+    meta.appendChild(sep2);
+
+    const dt = document.createElement('span');
+    dt.textContent = bill.status_date;
+    meta.appendChild(dt);
+  }
+
+  // Summary preview
+  const summaryWrap = document.createElement('div');
+  summaryWrap.className = 'card-summary';
+  const fullText = bill.summary || '';
+  const preview = truncateText(fullText, 200);
+  const needsExpand = fullText.length > preview.length;
+
+  const truncEl = document.createElement('span');
+  truncEl.className = 'truncated';
+  truncEl.textContent = preview + (needsExpand ? '…' : '');
+
+  const fullEl = document.createElement('span');
+  fullEl.className = 'full';
+  fullEl.textContent = fullText;
+
+  summaryWrap.appendChild(truncEl);
+  summaryWrap.appendChild(fullEl);
+
+  let expandBtn;
+  if (needsExpand) {
+    expandBtn = document.createElement('button');
+    expandBtn.className = 'expand-btn';
+    expandBtn.textContent = 'Read more';
+    expandBtn.addEventListener('click', () => {
+      const expanded = summaryWrap.classList.toggle('expanded');
+      expandBtn.textContent = expanded ? 'Show less' : 'Read more';
+    });
+    summaryWrap.appendChild(expandBtn);
+  }
+
+  // Tags
+  let tagsEl = null;
+  if (bill.tags && bill.tags.length) {
+    tagsEl = document.createElement('div');
+    tagsEl.className = 'card-tags';
+    bill.tags.forEach(t => {
+      const chip = document.createElement('span');
+      chip.className = 'tag-chip';
+      chip.textContent = t;
+      tagsEl.appendChild(chip);
+    });
+  }
+
+  // Actions
+  const actions = document.createElement('div');
+  actions.className = 'card-actions';
+
+  if (bill.file) {
+    const summaryLink = document.createElement('a');
+    summaryLink.href = bill.file;
+    summaryLink.className = 'btn btn-primary';
+    summaryLink.textContent = 'Read summary →';
+    actions.appendChild(summaryLink);
+  }
+
+  if (bill.url) {
+    const srcLink = document.createElement('a');
+    srcLink.href = bill.url;
+    srcLink.className = 'btn btn-secondary';
+    srcLink.target = '_blank';
+    srcLink.rel = 'noopener noreferrer';
+    srcLink.textContent = 'Official source ↗';
+    actions.appendChild(srcLink);
+  }
+
+  // Assemble
+  card.appendChild(top);
+  card.appendChild(meta);
+  card.appendChild(summaryWrap);
+  if (tagsEl) card.appendChild(tagsEl);
+  card.appendChild(actions);
+
+  return card;
+}
+
+function truncateText(text, maxChars) {
+  if (!text || text.length <= maxChars) return text || '';
+  const cut = text.lastIndexOf(' ', maxChars);
+  return cut > 0 ? text.slice(0, cut) : text.slice(0, maxChars);
+}
+
+function statusChipClass(status) {
+  const s = (status || '').toLowerCase();
+  if (s.includes('introduc'))                            return 'chip-introduced';
+  if (s.includes('committee'))                           return 'chip-committee';
+  if (s.includes('passed') || s.includes('agreed'))     return 'chip-passed';
+  if (s.includes('enact') || s.includes('signed') || s.includes('law')) return 'chip-enacted';
+  return 'chip-other';
+}
+
+// ── Event binding ─────────────────────────────────────────────
+function bindEvents() {
+  // Level pills
+  document.getElementById('level-pills').addEventListener('click', e => {
+    const pill = e.target.closest('.pill');
+    if (!pill) return;
+    activeFilters.level = pill.dataset.level;
+    applyFilterUI();
+    pushHash();
+    renderBills();
+  });
+
+  // Tag pills
+  document.getElementById('tag-pills').addEventListener('click', e => {
+    const pill = e.target.closest('.pill');
+    if (!pill) return;
+    activeFilters.tag = pill.dataset.tag;
+    applyFilterUI();
+    pushHash();
+    renderBills();
+  });
+
+  // State select
+  document.getElementById('state-select').addEventListener('change', e => {
+    activeFilters.state = e.target.value;
+    pushHash();
+    renderBills();
+  });
+
+  // Status select
+  document.getElementById('status-select').addEventListener('change', e => {
+    activeFilters.status = e.target.value;
+    pushHash();
+    renderBills();
+  });
+
+  // Reset
+  document.getElementById('reset-btn').addEventListener('click', resetFilters);
+}
+
+function resetFilters() {
+  activeFilters = { level: '', state: '', status: '', tag: '' };
+  applyFilterUI();
+  pushHash();
+  renderBills();
+}
+
+// ── Go ────────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
