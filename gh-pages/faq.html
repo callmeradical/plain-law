@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plain Law — About &amp; FAQ</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #ffffff;
+      --bg-subtle: #f5f6f7;
+      --border:    #d0d5db;
+      --text:      #1a1d23;
+      --text-muted:#5c6370;
+      --text-link: #1a5276;
+      --accent:    #1a5276;
+      --warn-bg:   #fffbeb;
+      --warn-border:#d97706;
+      --warn-text: #78350f;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    a { color: var(--text-link); }
+    a:hover { text-decoration: underline; }
+
+    /* ── Header ── */
+    header {
+      background: var(--text);
+      color: #fff;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .site-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+      text-decoration: none;
+    }
+    .site-name span { color: #7ec8e3; }
+    .tagline { font-size: 0.85rem; color: #b0b8c4; margin-top: 0.15rem; }
+    nav a {
+      color: #b0b8c4;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    nav a:hover { color: #fff; border-color: #fff; }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .page-header {
+      padding: 2.5rem 0 1.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+    .page-header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .page-header p {
+      margin-top: 0.5rem;
+      color: var(--text-muted);
+      max-width: 560px;
+    }
+
+    /* ── Section ── */
+    .faq-section {
+      margin-bottom: 2.5rem;
+    }
+    .faq-section h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--accent);
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── FAQ item ── */
+    details {
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      margin-bottom: 0.6rem;
+      overflow: hidden;
+    }
+    summary {
+      padding: 0.9rem 1.1rem;
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-subtle);
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: '+';
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      flex-shrink: 0;
+      transition: transform 0.15s;
+    }
+    details[open] summary::after {
+      content: '−';
+    }
+    details[open] summary {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-body {
+      padding: 1rem 1.25rem 1.1rem;
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+    .faq-body p + p { margin-top: 0.75rem; }
+    .faq-body ul, .faq-body ol {
+      padding-left: 1.35rem;
+      margin-top: 0.5rem;
+    }
+    .faq-body li { margin-bottom: 0.3rem; }
+
+    /* Prompt block */
+    .prompt-block {
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.9rem 1rem;
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 0.78rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-top: 0.75rem;
+      color: #374151;
+      line-height: 1.6;
+    }
+
+    /* Warning box */
+    .warning-box {
+      background: var(--warn-bg);
+      border-left: 4px solid var(--warn-border);
+      padding: 0.75rem 1rem;
+      border-radius: 0 6px 6px 0;
+      margin-top: 0.75rem;
+      font-size: 0.875rem;
+      color: var(--warn-text);
+    }
+    .warning-box strong { color: #92400e; }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--text);
+      color: #9ca3af;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+      text-align: center;
+      line-height: 1.8;
+      margin-top: 3rem;
+    }
+    footer a { color: #7ec8e3; }
+    footer a:hover { color: #fff; }
+
+    @media (max-width: 520px) {
+      header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header>
+  <div>
+    <a href="index.html" class="site-name">Plain<span>Law</span></a>
+    <div class="tagline">Proposed legislation in plain English</div>
+  </div>
+  <nav>
+    <a href="index.html">← Browse bills</a>
+  </nav>
+</header>
+
+<!-- ── Page content ── -->
+<div class="container">
+  <div class="page-header">
+    <h1>About &amp; FAQ</h1>
+    <p>Direct answers to common questions about what Plain Law is, how it works, and where it falls short. We'd rather be honest about the limitations than oversell what AI can do.</p>
+  </div>
+
+  <!-- ── About ── -->
+  <section class="faq-section">
+    <h2>About the project</h2>
+
+    <details open>
+      <summary>What is Plain Law?</summary>
+      <div class="faq-body">
+        <p>Plain Law is an open-source project that fetches proposed legislation from public government sources and uses a locally-hosted AI model to rewrite the text in plain English — the kind a thoughtful 14-year-old could follow.</p>
+        <p>The goal is to lower the barrier to understanding what your government is actively considering. You shouldn't need a law degree to have a rough idea of what a bill does.</p>
+        <p>Plain Law does not advocate for or against any bill. It is a reading aid, not a recommendation engine.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Who runs it?</summary>
+      <div class="faq-body">
+        <p>Plain Law is a personal, volunteer project. It is not affiliated with any government body, political organization, news outlet, or nonprofit. It is maintained by a small number of contributors in their spare time.</p>
+        <p>The source code is open. You can inspect every part of it — including the exact prompt the AI receives — on <a href="https://github.com/callmeradical/plain-law" target="_blank" rel="noopener">GitHub</a>.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Is this official government information?</summary>
+      <div class="faq-body">
+        <div class="warning-box">
+          <strong>No.</strong> Plain Law is not an official government source and is not endorsed by any government.
+        </div>
+        <p style="margin-top:0.75rem">Bill text, status, and official sources come from public government APIs (Congress.gov, LegiScan). The summaries are AI-generated interpretations of that data and may be incomplete, oversimplified, or wrong.</p>
+        <p>Every summary on this site includes a direct link to the official government text. If accuracy matters for your purposes — and it should — read the original.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ── Impartiality ── -->
+  <section class="faq-section">
+    <h2>Impartiality</h2>
+
+    <details>
+      <summary>Is this politically biased?</summary>
+      <div class="faq-body">
+        <p>We try hard not to be. The AI prompt instructs the model to present supporters' and critics' arguments neutrally, avoid editorializing, and not invent claims. You can read the exact prompt below.</p>
+        <p>That said, all AI models carry biases from their training data, and our ability to audit for subtle framing is limited. If you notice language in a summary that seems tilted, open an issue on GitHub. We take those reports seriously.</p>
+        <p>What we do <em>not</em> do: pick bills because of their political valence. Bills are fetched from configured sources based on recency and activity status, not ideology.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Who decides what bills get covered?</summary>
+      <div class="faq-body">
+        <p>The pipeline fetches whatever the configured sources expose — typically the most recently active bills from each source. There is no editorial selection. We do filter out bills that have definitively failed (vetoed, tabled, died) since those are no longer active.</p>
+        <p>Which <em>sources</em> are configured is a human decision. Right now those include the U.S. Congress API and LegiScan for states. The full list is in the <code>sources/</code> directory of the repository. Anyone can submit a pull request to add a state, county, or municipality.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>What about controversial topics?</summary>
+      <div class="faq-body">
+        <p>We do not exclude bills because the topic is controversial. A bill is covered if it is active in a source we track.</p>
+        <p>The AI is instructed to present what a bill does and what supporters and critics say, without taking a side. For genuinely contested topics, the summaries may feel frustratingly neutral. That is intentional.</p>
+        <p>If the neutral framing still feels wrong to you in a specific summary, the best recourse is to read the official text — which is always linked — and form your own view.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ── The AI ── -->
+  <section class="faq-section">
+    <h2>The AI</h2>
+
+    <details>
+      <summary>What model is used?</summary>
+      <div class="faq-body">
+        <p>Plain Law uses <strong>Gemma 3 27B</strong> (with Gemma 4 31B as a fallback), running locally via <a href="https://ollama.com/" target="_blank" rel="noopener">Ollama</a> on a self-hosted machine. No bill text is sent to any external API. No third-party cloud AI service is used.</p>
+        <p>Running locally means the pipeline has no ongoing API costs and does not share your legislative data with commercial providers. The trade-off is that local models are less capable than the largest commercial models, which is part of why we display a disclaimer on every summary.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>What exact prompt does the AI receive?</summary>
+      <div class="faq-body">
+        <p>Here is the exact prompt template used (verbatim from <code>pipeline/prompts/summarize.txt</code>). The placeholder <code>{bill_text}</code> is replaced with the bill's text or description at runtime.</p>
+        <pre class="prompt-block">You are a civic educator. Your job is to explain proposed or in-process legislation in plain, honest language that any adult can understand — no legal jargon, no political spin.
+
+This bill is currently active — it has been proposed or is moving through the legislative process. It has NOT necessarily become law.
+
+Given the following bill text or summary, write a plain-language explanation that covers:
+
+1. **What it does** — in one or two sentences a 14-year-old could understand
+2. **Who it affects** — which people, businesses, or groups will notice a change
+3. **What changes** — what's different after this passes vs. before
+4. **What's debated** — what supporters say, what critics say (neutral, factual)
+5. **Status** — where it is in the process
+
+Keep it under 300 words. No bullet soup — use short paragraphs. Don't editorialize.
+
+IMPORTANT: This is an AI-generated summary. Do NOT invent facts, dates, sponsor names, or vote counts. If you are uncertain about something, say so. The reader will verify using the official source linked below the summary.
+
+---
+
+BILL:
+{bill_text}
+
+---
+
+PLAIN LANGUAGE SUMMARY:</pre>
+        <p style="margin-top:0.75rem">Nothing is hidden. What you see above is what the model sees.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Can the AI make mistakes?</summary>
+      <div class="faq-body">
+        <p>Yes. Regularly. Known failure modes include:</p>
+        <ul>
+          <li><strong>Hallucination</strong> — the model may confidently state something that isn't in the source text.</li>
+          <li><strong>Oversimplification</strong> — nuance or exceptions in the bill's language may be lost.</li>
+          <li><strong>Stale context</strong> — the model's training data has a cutoff date; it may not know about recent amendments or procedural context.</li>
+          <li><strong>Subtle framing</strong> — word choice can imply a viewpoint even when the model isn't trying to.</li>
+        </ul>
+        <p>The prompt explicitly instructs the model not to invent facts, but that instruction is not foolproof. Treat every summary as a rough starting point, not a reliable source. The official text is always linked.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Why use AI at all?</summary>
+      <div class="faq-body">
+        <p>Legislative text is genuinely hard to read. Bills are written in a legal register that references existing statute by section number, uses defined terms that differ from their everyday meanings, and assumes background knowledge most people don't have. That creates a real accessibility gap.</p>
+        <p>AI can bridge that gap imperfectly but quickly, at scale, for free. The alternative — human editors summarizing every active bill — would require significant ongoing funding and staff.</p>
+        <p>The bet here is that an imperfect, clearly-labeled AI summary that links to the original is better than nothing. If you disagree with that premise, that's a fair position. The source code is open; you are welcome to fork it and apply human review before publishing.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ── The data ── -->
+  <section class="faq-section">
+    <h2>The data</h2>
+
+    <details>
+      <summary>Where does the bill data come from?</summary>
+      <div class="faq-body">
+        <p>Currently two sources:</p>
+        <ul>
+          <li>
+            <strong>Congress.gov API</strong> — the official U.S. federal legislative data service. Free, no API key required for basic use. Covers U.S. House and Senate bills. Rate limit: 5,000 requests/hour.
+          </li>
+          <li>
+            <strong>LegiScan</strong> — a third-party aggregator that normalizes legislative data across all 50 U.S. states. Covers state bills. Requires a free API key (set via the <code>LEGISCAN_API_KEY</code> environment variable).
+          </li>
+        </ul>
+        <p>County and municipal sources are configured individually via YAML files in the <code>sources/</code> directory. They may use RSS feeds, structured APIs, or web scrapers, depending on what the jurisdiction provides.</p>
+        <p>All data originates from public government sources. Plain Law does not generate or fabricate legislative data — only the plain-language summaries are AI-generated.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>How current is the data?</summary>
+      <div class="faq-body">
+        <p>The pipeline is designed to run periodically (default: every hour). How recently any particular bill was updated depends on when the pipeline last ran and when the upstream source was updated.</p>
+        <p>Each summary page shows a "summary generated" timestamp. Bills that are rapidly moving through a legislature may lag by a few hours. Bill status changes (e.g. a vote) may not be reflected until the next pipeline run.</p>
+        <p>For time-sensitive information, always check the official source directly.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Why is my state or county not listed?</summary>
+      <div class="faq-body">
+        <p>Because no one has configured it yet. Plain Law relies on contributors to add source files for their jurisdiction. Adding a state or county takes about five minutes and requires no programming — just a YAML file.</p>
+        <p>See <a href="https://github.com/callmeradical/plain-law/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">CONTRIBUTING.md</a> for step-by-step instructions. If you want your county covered and aren't sure how to start, open an issue and someone will help.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ── Contributing ── -->
+  <section class="faq-section">
+    <h2>Contributing</h2>
+
+    <details>
+      <summary>How do I add my state or county?</summary>
+      <div class="faq-body">
+        <p>Create a YAML file in the appropriate <code>sources/</code> subdirectory and open a pull request. Full instructions are in <a href="https://github.com/callmeradical/plain-law/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">CONTRIBUTING.md</a>.</p>
+        <p>In brief:</p>
+        <ol>
+          <li>Find the right directory: <code>sources/states/</code>, <code>sources/counties/</code>, or <code>sources/municipalities/</code>.</li>
+          <li>Create a file named <code>{state}-{locality}.yaml</code> (e.g., <code>pa-philadelphia.yaml</code>).</li>
+          <li>Fill in the template: locale name, type, state, and at least one enabled source.</li>
+          <li>Open a pull request. That's it.</li>
+        </ol>
+        <p>If your jurisdiction has no machine-readable feed (no RSS, no API, no Legistar), open an issue. We can discuss adding a scraper or PDF fetcher.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>How do I report an error in a summary?</summary>
+      <div class="faq-body">
+        <p>Open an issue on <a href="https://github.com/callmeradical/plain-law/issues" target="_blank" rel="noopener">GitHub</a>. Include:</p>
+        <ul>
+          <li>The bill name or ID</li>
+          <li>What the summary says</li>
+          <li>What it should say (with a link to the official text if you have it)</li>
+        </ul>
+        <p>We will re-run the summarizer on that bill. If the error is systematic — the model consistently misreads a type of bill — we may update the prompt.</p>
+        <p>Note: we cannot guarantee corrections are instantaneous. The pipeline runs on a volunteer schedule.</p>
+      </div>
+    </details>
+  </section>
+
+</div><!-- /.container -->
+
+<!-- ── Footer ── -->
+<footer>
+  <p>
+    <a href="https://github.com/callmeradical/plain-law">GitHub</a> ·
+    <a href="https://github.com/callmeradical/plain-law/blob/main/CONTRIBUTING.md">Contributing</a> ·
+    <a href="index.html">Browse bills</a>
+  </p>
+  <p style="margin-top:0.5rem;color:#6b7280;font-size:0.75rem">
+    Plain Law is not affiliated with any government body. Summaries are AI-generated and may contain errors.
+    Always verify with official sources before making decisions.
+  </p>
+</footer>
+
+</body>
+</html>
