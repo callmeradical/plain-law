@@ -60,7 +60,9 @@
       color: var(--text);
       text-decoration: none;
     }
+    .wordmark .plain { color: #fff; }
     .wordmark .accent { color: var(--wordmark); }
+    .wordmark span { display: inline; font-size: inherit; font-weight: inherit; letter-spacing: inherit; }
     .masthead-nav {
       display: flex;
       gap: 1.5rem;
@@ -394,7 +396,7 @@
 <header class="masthead">
   <div class="masthead-inner">
     <div class="masthead-top">
-      <a href="index.html" class="wordmark">Plain<span class="accent">Law</span></a>
+      <a href="index.html" class="wordmark"><span class="plain">Plain</span><span class="accent">Law</span></a>
       <nav class="masthead-nav">
         <a href="faq.html">About &amp; FAQ</a>
         <a href="https://github.com/callmeradical/plain-law" target="_blank" rel="noopener">GitHub</a>
