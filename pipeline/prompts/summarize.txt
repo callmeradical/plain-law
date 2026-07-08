@@ -10,6 +10,8 @@ Given the following bill text or summary, write a plain-language explanation tha
 
 Keep it under 300 words. No bullet soup — use short paragraphs. Don't editorialize.
 
+IMPORTANT: This is an AI-generated summary. Do NOT invent facts, dates, sponsor names, or vote counts. If you are uncertain about something, say so. The reader will verify using the official source linked below the summary.
+
 ---
 
 BILL:
