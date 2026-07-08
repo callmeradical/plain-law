@@ -45,7 +45,10 @@ class Publisher:
                 f.write(f"| Field | Value |\n")
                 f.write(f"|-------|-------|\n")
                 f.write(f"| **Source** | {bill['source']} |\n")
-                f.write(f"| **Status** | {bill.get('status', 'Unknown')} |\n")
+                status_str = bill.get('status', 'Unknown')
+                if bill.get('status_date'):
+                    status_str += f" *(as of {bill['status_date']})*"
+                f.write(f"| **Status** | {status_str} |\n")
                 if bill.get('url'):
                     f.write(f"| **Official text** | [{bill['url']}]({bill['url']}) |\n")
                 f.write(f"| **Tags** | {', '.join(bill.get('tags', []))} |\n")

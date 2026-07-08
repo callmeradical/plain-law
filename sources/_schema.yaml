@@ -8,6 +8,13 @@ type: string          # One of: federal | state | county | municipality
 sources: list         # One or more data source definitions (see below)
 tags: list            # Flat list of string tags for filtering/categorization
 
+# Pipeline behavior
+# The pipeline only processes ACTIVE/IN-PROCESS legislation:
+#   - Included: Introduced, In committee, Passed one chamber, Enrolled, Enacted (just passed)
+#   - Excluded: Failed, Vetoed, Indefinitely postponed, Withdrawn
+# This ensures summaries are about bills that are still moving and where
+# public awareness is relevant. Dead bills are silently skipped.
+
 # Optional fields
 state: string         # Two-letter state abbreviation (if applicable)
 fips: string          # FIPS code for geographic identification
