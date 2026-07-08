@@ -4,6 +4,7 @@ Docs: https://api.congress.gov/
 Free, no key required for basic use.
 """
 
+import os
 import requests
 import logging
 
@@ -42,11 +43,14 @@ class CongressFetcher:
     def __init__(self, src_def: dict, locale: dict):
         self.src_def = src_def
         self.locale = locale
-        self.api_key = src_def.get("api_key") or ""
+        self.api_key = src_def.get("api_key") or os.environ.get("CONGRESS_API_KEY", "")
+
+    # 119th Congress started Jan 2025 — always fetch from current congress
+    CURRENT_CONGRESS = 119
 
     def fetch(self) -> list:
         params = {
-            "limit": 50,  # fetch more, then filter down to active
+            "limit": 50,
             "sort": "updateDate+desc",
             "format": "json",
         }
@@ -54,7 +58,8 @@ class CongressFetcher:
             params["api_key"] = self.api_key
 
         try:
-            resp = requests.get(f"{self.BASE_URL}/bill", params=params, timeout=30)
+            url = f"{self.BASE_URL}/bill/{self.CURRENT_CONGRESS}"
+            resp = requests.get(url, params=params, timeout=30)
             resp.raise_for_status()
             data = resp.json()
             bills = data.get("bills", [])
