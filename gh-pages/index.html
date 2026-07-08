@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <base href="/plain-law/">
   <title>Plain Law — Proposed legislation in plain English</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -610,7 +609,8 @@ let activeFilters = { level: '', state: '', status: '', tag: '' };
 // ── Bootstrap ──────────────────────────────────────────────
 async function init() {
   try {
-    const resp = await fetch('./bills.json?v=' + Date.now());
+    const url = 'https://larscromley.com/plain-law/bills.json?v=' + Date.now();
+    const resp = await fetch(url);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const text = await resp.text();
     allBills = text.split('\n').reduce((acc, line) => {
@@ -794,7 +794,7 @@ function openModal(bill) {
   }
   if (bill.file) {
     const a = document.createElement('a');
-    a.href = bill.file;
+    a.href = 'https://larscromley.com/plain-law/' + bill.file;
     a.textContent = 'Full summary page →';
     actions.appendChild(a);
   }
