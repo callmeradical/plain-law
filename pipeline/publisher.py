@@ -19,6 +19,15 @@ import shutil
 from pathlib import Path
 from datetime import datetime, timezone
 
+
+def _gh_remote_url(repo: str) -> str:
+    """Prefer HTTPS+gh token; fall back to SSH."""
+    result = subprocess.run(["gh", "auth", "token"], capture_output=True, text=True)
+    token = result.stdout.strip()
+    if token:
+        return f"https://{token}@github.com/{repo}.git"
+    return f"git@github.com:{repo}.git"
+
 BASE_DIR = Path(__file__).parent.parent
 OUTPUT_DIR = BASE_DIR / "output"
 JSONL_PATH = OUTPUT_DIR / "bills.jsonl"
@@ -146,7 +155,12 @@ class Publisher:
     # ── Git helpers ───────────────────────────────────────────────────────────
 
     def _get_clone(self) -> str:
-        """Return path to a persistent clone dir; create+clone on first call."""
+        """Return path to a persistent clone dir; create+clone on first call.
+
+        We clone sparse (no-checkout) so the working tree starts empty, then
+        only ever add/update the files we explicitly copy in — never the whole
+        source repo.
+        """
         if self._clone_dir and Path(self._clone_dir).exists():
             return self._clone_dir
 
@@ -157,9 +171,18 @@ class Publisher:
 
         tmpdir = tempfile.mkdtemp(prefix="plain-law-pages-")
         subprocess.run(
-            ["git", "clone", f"git@github.com:{repo}.git", "--branch", branch, "--depth", "1", tmpdir],
+            ["git", "clone", _gh_remote_url(repo), "--branch", branch,
+             "--depth", "1", "--no-local", tmpdir],
             check=True,
         )
+        # Wipe everything except .git — we only want our files in this branch
+        for item in Path(tmpdir).iterdir():
+            if item.name == ".git":
+                continue
+            if item.is_dir():
+                shutil.rmtree(item)
+            else:
+                item.unlink()
         self._clone_dir = tmpdir
         logging.info(f"Cloned {repo}@{branch} → {tmpdir}")
         return tmpdir
@@ -168,10 +191,17 @@ class Publisher:
         """Copy changed files into the persistent clone and push one commit."""
         try:
             clone = self._get_clone()
-            bill = bill_id  # for the commit message
+            clone_path = Path(clone)
+
+            # Always keep index.html + faq.html current in the pages branch
+            gh_pages_dir = BASE_DIR / "gh-pages"
+            for static in ["index.html", "faq.html"]:
+                src = gh_pages_dir / static
+                if src.exists():
+                    shutil.copy(src, clone_path / static)
 
             # Copy the new/changed files
-            safe_id = self._safe_id(bill)
+            safe_id = self._safe_id(bill_id)
             md_src = OUTPUT_DIR / f"{safe_id}.md"
             if md_src.exists():
                 shutil.copy(md_src, clone)
@@ -213,7 +243,7 @@ class Publisher:
         try:
             with tempfile.TemporaryDirectory() as tmpdir:
                 subprocess.run(
-                    ["git", "clone", f"git@github.com:{repo}.git", "--branch", branch, tmpdir],
+                    ["git", "clone", _gh_remote_url(repo), "--branch", branch, tmpdir],
                     check=True,
                 )
                 for f in OUTPUT_DIR.glob("*.md"):
