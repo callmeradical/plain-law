@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/plain-law/">
   <title>Plain Law — Proposed legislation in plain English</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -609,9 +610,7 @@ let activeFilters = { level: '', state: '', status: '', tag: '' };
 // ── Bootstrap ──────────────────────────────────────────────
 async function init() {
   try {
-    // Use absolute path so mobile browsers don't misresolve relative URL
-    const base = document.querySelector('base')?.href || (location.origin + location.pathname.replace(/\/[^/]*$/, '/'));
-    const resp = await fetch(base + 'bills.json');
+    const resp = await fetch('./bills.json');
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const text = await resp.text();
     allBills = text.split('\n').filter(l => l.trim()).map(l => JSON.parse(l));
