@@ -44,13 +44,20 @@ def run(dry_run=False):
     config = load_config()
     sources = load_sources()
     dedup = DedupStore(config["pipeline"]["dedup_window_days"])
-    summarizer = Summarizer(config["model"], config["pipeline"]["pipeline"]["prompt_template"] if "pipeline" in config else config["summarizer"]["prompt_template"])
+
+    prompt_key = (
+        config["pipeline"]["pipeline"]["prompt_template"]
+        if "pipeline" in config.get("pipeline", {})
+        else config["summarizer"]["prompt_template"]
+    )
+    summarizer = Summarizer(config["model"], prompt_key)
     publisher = Publisher(config["output"])
 
     logging.info(f"Loaded {len(sources)} source files")
 
-    results = []
+    results = []  # kept for dry-run / logging
     bill_count = 0
+    max_bills = config["pipeline"]["max_bills_per_run"]
 
     for source in sources:
         for src_def in source.get("sources", []):
@@ -66,23 +73,27 @@ def run(dry_run=False):
             logging.info(f"  {source['name']}: fetched {len(bills)} bills")
 
             for bill in bills:
-                if bill_count >= config["pipeline"]["max_bills_per_run"]:
+                if bill_count >= max_bills:
+                    logging.info(f"Reached max_bills_per_run ({max_bills}), stopping.")
                     break
                 if dedup.seen(bill["id"]):
+                    logging.debug(f"Skipping duplicate: {bill['id']}")
                     continue
 
                 summary = summarizer.summarize(bill)
-                results.append({"source": source, "bill": bill, "summary": summary})
+                result = {"source": source, "bill": bill, "summary": summary}
+
+                if dry_run:
+                    print(f"\n--- {bill['title']} ---\n{summary}\n")
+                else:
+                    # Stream: commit this bill immediately after summarisation
+                    publisher.publish_one(result)
+
+                results.append(result)
                 dedup.mark(bill["id"])
                 bill_count += 1
 
-    logging.info(f"Summarized {len(results)} bills")
-
-    if not dry_run:
-        publisher.publish(results)
-    else:
-        for r in results:
-            print(f"\n--- {r['bill']['title']} ---\n{r['summary']}\n")
+    logging.info(f"Summarized and published {bill_count} bills")
 
 
 if __name__ == "__main__":
