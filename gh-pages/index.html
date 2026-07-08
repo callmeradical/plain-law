@@ -517,7 +517,7 @@ let activeFilters = {
 async function init() {
   try {
     // bills.jsonl — one JSON object per line, appended as each bill finishes
-    const resp = await fetch('bills.jsonl');
+    const resp = await fetch('bills.json');
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const text = await resp.text();
     allBills = text

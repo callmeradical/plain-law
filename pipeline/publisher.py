@@ -30,7 +30,7 @@ def _gh_remote_url(repo: str) -> str:
 
 BASE_DIR = Path(__file__).parent.parent
 OUTPUT_DIR = BASE_DIR / "output"
-JSONL_PATH = OUTPUT_DIR / "bills.jsonl"
+JSONL_PATH = OUTPUT_DIR / "bills.json"
 
 
 class Publisher:
