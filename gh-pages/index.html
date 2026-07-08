@@ -367,23 +367,23 @@
 
     /* Structured summary sections */
     .summary-section {
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
     }
     .summary-section-label {
       font-family: var(--sans);
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       color: var(--text-muted);
-      margin-bottom: 0.35rem;
-      padding-bottom: 0.25rem;
-      border-bottom: 1px solid var(--rule);
+      margin-bottom: 0.6rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 2px solid var(--border);
     }
     .summary-section p {
       font-family: var(--serif);
-      font-size: 0.95rem;
-      line-height: 1.65;
+      font-size: 1rem;
+      line-height: 1.7;
       color: var(--text);
     }
     .summary-section ul {
@@ -392,10 +392,10 @@
     }
     .summary-section ul li {
       font-family: var(--serif);
-      font-size: 0.93rem;
+      font-size: 0.95rem;
       line-height: 1.6;
       color: var(--text);
-      padding: 0.3rem 0 0.3rem 1.1rem;
+      padding: 0.55rem 0 0.55rem 1.25rem;
       position: relative;
       border-bottom: 1px solid var(--rule);
     }
@@ -405,6 +405,7 @@
       position: absolute;
       left: 0;
       color: var(--text-muted);
+      font-style: normal;
     }
 
     /* Fallback prose paragraphs */
@@ -855,7 +856,8 @@ function parseStructured(raw) {
     } else if (current === 'affected' || current === 'changes' || current === 'debated') {
       // Bullet lines start with - or *
       const bullet = t.replace(/^[-*•]\s*/, '').trim();
-      if (bullet) result[current].push(bullet);
+      // Skip raw URLs
+      if (bullet && !/^https?:///i.test(bullet) && !/^[https?/i.test(bullet)) result[current].push(bullet);
     }
   }
 
