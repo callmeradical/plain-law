@@ -71,7 +71,7 @@ class CongressFetcher:
             return []
 
     def _is_active(self, raw: dict) -> bool:
-        action_text = (raw.get("latestAction", {}).get("text") or "").lower()
+        action_text = ((raw.get("latestAction") or {}).get("text") or "").lower()
         # Explicitly dead? Skip.
         if any(kw in action_text for kw in DEAD_ACTION_KEYWORDS):
             return False
