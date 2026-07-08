@@ -607,28 +607,39 @@ let allBills = [];
 let activeFilters = { level: '', state: '', status: '', tag: '' };
 
 // ── Bootstrap ──────────────────────────────────────────────
-async function init() {
-  try {
-    const url = 'https://larscromley.com/plain-law/bills.json?v=' + Date.now();
-    const resp = await fetch(url);
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    const text = await resp.text();
-    allBills = text.split('\n').reduce((acc, line) => {
-      const l = line.trim();
-      if (!l) return acc;
+function init() {
+  var url = 'https://larscromley.com/plain-law/bills.json?v=' + Date.now();
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+  xhr.onload = function() {
+    if (xhr.status !== 200) {
+      document.getElementById('loading').textContent = 'Could not load bills (HTTP ' + xhr.status + ').';
+      return;
+    }
+    var lines = xhr.responseText.split('\n');
+    allBills = [];
+    for (var i = 0; i < lines.length; i++) {
+      var l = lines[i].trim();
+      if (!l) continue;
       try {
-        const b = JSON.parse(l);
-        // Skip placeholder bills with no real content
-        if (/reserved for the/i.test(b.title || '')) return acc;
-        acc.push(b);
-      } catch(e) { /* skip malformed line */ }
-      return acc;
-    }, []);
-  } catch (err) {
-    document.getElementById('loading').textContent =
-      'Could not load bills. The pipeline may not have run yet. (' + err.message + ')';
-    return;
-  }
+        var b = JSON.parse(l);
+        if (/reserved for the/i.test(b.title || '')) continue;
+        allBills.push(b);
+      } catch(e) {}
+    }
+    if (allBills.length === 0) {
+      document.getElementById('loading').textContent = 'No bills available yet. Check back soon.';
+      return;
+    }
+    onBillsLoaded();
+  };
+  xhr.onerror = function() {
+    document.getElementById('loading').textContent = 'Network error loading bills. Please try again.';
+  };
+  xhr.send();
+}
+
+function onBillsLoaded() {
   document.getElementById('loading').style.display = 'none';
   document.getElementById('filter-section').style.display = '';
   document.getElementById('results-meta').style.display = '';
