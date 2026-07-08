@@ -175,13 +175,16 @@ class Publisher:
              "--depth", "1", "--no-local", tmpdir],
             check=True,
         )
-        # Wipe everything except .git — we only want our files in this branch
+        # Remove any source-repo directories that don't belong on the pages branch
+        # (pipeline/, sources/, etc.) but keep existing .md summaries and static files
+        keep_extensions = {".md", ".html", ".json", ".txt", ".css", ".js", ".png", ".ico"}
+        keep_names = {"bills.json", "CNAME"}
         for item in Path(tmpdir).iterdir():
             if item.name == ".git":
                 continue
             if item.is_dir():
-                shutil.rmtree(item)
-            else:
+                shutil.rmtree(item)  # remove any subdirectories (pipeline/, sources/, etc.)
+            elif item.suffix not in keep_extensions and item.name not in keep_names:
                 item.unlink()
         self._clone_dir = tmpdir
         logging.info(f"Cloned {repo}@{branch} → {tmpdir}")
