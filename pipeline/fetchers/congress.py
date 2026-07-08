@@ -82,7 +82,7 @@ class CongressFetcher:
         return True
 
     def _normalize(self, raw: dict) -> dict:
-        latest_action = raw.get("latestAction", {})
+        latest_action = raw.get("latestAction") or {}
         bill_type = raw.get("type", "").lower()
         bill_num = raw.get("number", "")
         congress = raw.get("congress", "")
