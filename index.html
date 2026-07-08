@@ -911,7 +911,7 @@ function parseStructured(raw) {
       // Bullet lines start with - or *
       const bullet = t.replace(/^[-*•]\s*/, '').trim();
       // Skip raw URLs
-      if (bullet && !/^https?:///i.test(bullet) && !/^[https?/i.test(bullet)) result[current].push(bullet);
+      if (bullet && !/^https?:\/\//i.test(bullet)) result[current].push(bullet);
     }
   }
 
