@@ -71,6 +71,10 @@ class CongressFetcher:
             return []
 
     def _is_active(self, raw: dict) -> bool:
+        # Skip placeholder bills
+        title = (raw.get("title") or "").lower()
+        if "reserved for the" in title:
+            return False
         action_text = ((raw.get("latestAction") or {}).get("text") or "").lower()
         # Explicitly dead? Skip.
         if any(kw in action_text for kw in DEAD_ACTION_KEYWORDS):
