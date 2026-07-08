@@ -4,12 +4,12 @@
 model:
   provider: ollama
   host: http://cleanthes.taila4fb6a.ts.net:11434
-  model: gemma3:12b
+  model: gemma3:27b
   fallback: gemma3:12b
   timeout: 120  # seconds
 
 summarizer:
-  prompt_template: prompts/summarize.txt
+  prompt_template: pipeline/prompts/summarize.txt
   max_input_tokens: 8000
   language: plain English
   reading_level: 8th grade  # target reading level
