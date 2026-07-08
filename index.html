@@ -516,12 +516,17 @@ let activeFilters = {
 // ── Bootstrap ───────────────────────────────────────────────
 async function init() {
   try {
+    // bills.jsonl — one JSON object per line, appended as each bill finishes
     const resp = await fetch('bills.json');
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    allBills = await resp.json();
+    const text = await resp.text();
+    allBills = text
+      .split('\n')
+      .filter(line => line.trim().length > 0)
+      .map(line => JSON.parse(line));
   } catch (err) {
     document.getElementById('loading').textContent =
-      'Could not load bills.json. ' + (allBills.length === 0
+      'Could not load bills.jsonl. ' + (allBills.length === 0
         ? 'The pipeline may not have run yet.'
         : err.message);
     return;
