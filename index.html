@@ -609,7 +609,9 @@ let activeFilters = { level: '', state: '', status: '', tag: '' };
 // ── Bootstrap ──────────────────────────────────────────────
 async function init() {
   try {
-    const resp = await fetch('bills.json');
+    // Use absolute path so mobile browsers don't misresolve relative URL
+    const base = document.querySelector('base')?.href || (location.origin + location.pathname.replace(/\/[^/]*$/, '/'));
+    const resp = await fetch(base + 'bills.json');
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const text = await resp.text();
     allBills = text.split('\n').filter(l => l.trim()).map(l => JSON.parse(l));
