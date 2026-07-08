@@ -1,0 +1,41 @@
+# Pipeline Configuration
+# Controls how the pipeline runs, which model to use, and where output goes.
+
+model:
+  provider: ollama
+  host: http://cleanthes.taila4fb6a.ts.net:11434
+  model: gemma3:27b
+  fallback: gemma4:31b
+  timeout: 120  # seconds
+
+summarizer:
+  prompt_template: prompts/summarize.txt
+  max_input_tokens: 8000
+  language: plain English
+  reading_level: 8th grade  # target reading level
+
+pipeline:
+  poll_interval: 3600       # seconds between runs (1 hour)
+  max_bills_per_run: 50
+  dedup_window_days: 30     # skip bills already processed within this window
+
+output:
+  format: markdown
+  directory: output/
+  github_pages:
+    enabled: true
+    repo: callmeradical/REPO_NAME_HERE
+    branch: gh-pages
+    commit_message: "chore: update summaries [{date}]"
+
+filters:
+  # Optional: only surface bills matching these topics (leave empty for all)
+  topics: []
+  #  - small business
+  #  - housing
+  #  - tax
+  #  - employment
+
+logging:
+  level: info
+  file: logs/pipeline.log

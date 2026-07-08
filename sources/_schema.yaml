@@ -1,0 +1,36 @@
+# Source File Schema
+# All files in sources/{federal,states,counties,municipalities}/ must follow this schema.
+# The pipeline validates each file against this schema on load.
+
+# Required fields
+name: string          # Human-readable name (e.g. "Camden County, NJ")
+type: string          # One of: federal | state | county | municipality
+sources: list         # One or more data source definitions (see below)
+tags: list            # Flat list of string tags for filtering/categorization
+
+# Optional fields
+state: string         # Two-letter state abbreviation (if applicable)
+fips: string          # FIPS code for geographic identification
+maintainer: string    # GitHub handle of the person maintaining this locale
+notes: string         # Free-text notes
+
+# Source definition fields (under sources:)
+# type: api | rss | scrape
+#
+# api:
+#   url: string         Base URL
+#   provider: string    Known provider name (congress, legiscan, etc.)
+#   enabled: bool
+#   params: object      Query param defaults
+#   notes: string
+#
+# rss:
+#   url: string         Feed URL
+#   enabled: bool
+#   notes: string
+#
+# scrape:
+#   url: string         Page URL
+#   selector: string    CSS selector for content elements
+#   enabled: bool
+#   notes: string

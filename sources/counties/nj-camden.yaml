@@ -1,0 +1,16 @@
+name: Camden County, NJ
+type: county
+state: NJ
+fips: "34007"
+sources:
+  - type: rss
+    url: https://www.camdencounty.com/feed/
+    enabled: false
+    notes: "General news feed — may need filtering for legislative content."
+  - type: scrape
+    url: https://www.camdencounty.com/government/board-of-chosen-freeholders/agendas-minutes/
+    selector: "a[href*='agenda']"
+    enabled: false
+    notes: "Scrape agenda/minutes page. Selector may need updating."
+tags: [county, nj, camden]
+maintainer: ""

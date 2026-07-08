@@ -1,0 +1,9 @@
+.dedup_store.json
+logs/
+output/
+__pycache__/
+*.pyc
+.env
+*.egg-info/
+.venv/
+venv/

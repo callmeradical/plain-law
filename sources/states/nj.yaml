@@ -1,0 +1,16 @@
+name: New Jersey
+type: state
+state: NJ
+fips: "34"
+sources:
+  - type: api
+    provider: legiscan
+    url: https://api.legiscan.com
+    enabled: true
+    notes: "LegiScan free tier — covers all 50 states. Requires LEGISCAN_API_KEY env var."
+  - type: rss
+    url: https://www.njleg.state.nj.us/rss/bills.rss
+    enabled: false
+    notes: "Fallback RSS if LegiScan is unavailable."
+tags: [state, nj, new-jersey]
+maintainer: ""

@@ -1,0 +1,15 @@
+name: U.S. Congress
+type: federal
+sources:
+  - type: api
+    url: https://api.congress.gov/v3
+    enabled: true
+    endpoints:
+      bills: /bill
+      actions: /bill/{congress}/{billType}/{billNumber}/actions
+    params:
+      limit: 20
+      sort: updateDate+desc
+tags: [federal, legislation, congress]
+maintainer: ""
+notes: "Free API, no key required for basic use. Rate limit: 5000 req/hour."
