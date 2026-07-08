@@ -5,16 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plain Law — Proposed legislation in plain English</title>
   <style>
-    /* ── Reset & base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
       --bg:        #ffffff;
+      --bg-card:   #fafafa;
       --text:      #1a1a1a;
       --text-muted:#6b6b6b;
-      --border:    #222222;
-      --rule:      #d0d0d0;
-      --wordmark:  #1a1a1a;
+      --border:    #1a1a1a;
+      --rule:      #e0e0e0;
       --serif:     Georgia, "Times New Roman", Times, serif;
       --sans:      -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
     }
@@ -24,7 +23,7 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.65;
-      font-size: 17px;
+      font-size: 16px;
     }
 
     a { color: var(--text); }
@@ -35,10 +34,9 @@
       border-top: 3px solid var(--border);
       border-bottom: 1px solid var(--border);
       padding: 0.5rem 0 0.75rem;
-      margin-bottom: 0;
     }
     .masthead-inner {
-      max-width: 860px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
@@ -53,15 +51,15 @@
     }
     .wordmark {
       font-family: var(--serif);
-      font-size: 3.2rem;
+      font-size: 3rem;
       font-weight: 700;
       letter-spacing: -0.03em;
       line-height: 1;
       color: var(--text);
       text-decoration: none;
     }
-    .wordmark .plain { color: #fff; }
-    .wordmark .accent { color: var(--wordmark); }
+    .wordmark .plain { color: var(--text); }
+    .wordmark .accent { color: var(--text); }
     .wordmark span { display: inline; font-size: inherit; font-weight: inherit; letter-spacing: inherit; }
     .masthead-nav {
       display: flex;
@@ -71,7 +69,7 @@
     }
     .masthead-nav a {
       font-family: var(--sans);
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--text);
@@ -83,57 +81,51 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
     }
     .masthead-tagline {
       font-family: var(--sans);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: var(--text-muted);
     }
     .masthead-date {
       font-family: var(--sans);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
     }
 
-    /* ── Disclaimer (editorial note) ── */
+    /* ── Disclaimer ── */
     .editorial-note {
-      border-top: 1px solid var(--rule);
       border-bottom: 1px solid var(--rule);
-      padding: 0.6rem 0;
-      margin: 0;
+      padding: 0.55rem 0;
       background: var(--bg);
     }
-    .editorial-note .container {
+    .editorial-note .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
       font-family: var(--sans);
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-style: italic;
       color: var(--text-muted);
-      line-height: 1.5;
     }
 
     /* ── Layout ── */
-    .container {
-      max-width: 860px;
+    .page-inner {
+      max-width: 1100px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
 
-    /* ── Filter bar (section nav) ── */
+    /* ── Filter bar ── */
     .filter-section {
       border-bottom: 2px solid var(--border);
-      padding: 0.6rem 0;
+      padding: 0.55rem 0;
       position: sticky;
       top: 0;
       z-index: 100;
       background: var(--bg);
-    }
-    .filter-section .container {
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
     }
     .filter-row {
       display: flex;
@@ -143,81 +135,64 @@
     }
     .filter-label {
       font-family: var(--sans);
-      font-size: 0.65rem;
+      font-size: 0.63rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: var(--text-muted);
-      min-width: 52px;
+      min-width: 48px;
       flex-shrink: 0;
     }
-
-    /* Section nav pills → plain text links */
-    .pill-group { display: flex; flex-wrap: wrap; gap: 0 0.1rem; }
+    .pill-group { display: flex; flex-wrap: wrap; gap: 0; }
     .pill {
       display: inline-block;
-      padding: 0.15rem 0.5rem;
+      padding: 0.15rem 0.45rem;
       font-family: var(--sans);
-      font-size: 0.76rem;
+      font-size: 0.73rem;
       color: var(--text-muted);
       cursor: pointer;
       user-select: none;
       border-bottom: 2px solid transparent;
-      transition: color 0.1s, border-color 0.1s;
       background: none;
-      border-top: none;
-      border-left: none;
-      border-right: none;
+      border-top: none; border-left: none; border-right: none;
       text-decoration: none;
+      transition: color 0.1s, border-color 0.1s;
     }
     .pill:hover { color: var(--text); border-bottom-color: var(--text); }
-    .pill.active {
-      color: var(--text);
-      font-weight: 700;
-      border-bottom-color: var(--text);
-    }
+    .pill.active { color: var(--text); font-weight: 700; border-bottom-color: var(--text); }
 
-    /* Selects */
     select.filter-select {
-      padding: 0.2rem 0.5rem;
+      padding: 0.18rem 1.3rem 0.18rem 0.45rem;
       border: 1px solid var(--rule);
       border-radius: 0;
-      background: #fff;
+      background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b6b6b'/%3E%3C/svg%3E") no-repeat right 0.4rem center;
       color: var(--text);
       font-family: var(--sans);
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       cursor: pointer;
-      appearance: none;
-      -webkit-appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b6b6b'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 0.45rem center;
-      padding-right: 1.4rem;
+      appearance: none; -webkit-appearance: none;
     }
     select.filter-select:focus { outline: 1px solid var(--text); }
 
-    /* Reset button */
     .btn-reset {
-      padding: 0.2rem 0.6rem;
+      padding: 0.18rem 0.55rem;
       border: 1px solid var(--rule);
       border-radius: 0;
       background: #fff;
       color: var(--text-muted);
       font-family: var(--sans);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       cursor: pointer;
-      transition: background 0.1s;
-      white-space: nowrap;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
     }
     .btn-reset:hover { background: #f0f0f0; color: var(--text); }
 
-    /* Results meta */
+    /* ── Results meta ── */
     .results-meta {
-      padding: 1rem 0 0.5rem;
+      padding: 0.9rem 0 0.6rem;
       font-family: var(--sans);
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.06em;
@@ -225,168 +200,263 @@
     }
     .results-count { font-weight: 700; color: var(--text); }
 
-    /* ── Bill list ── */
+    /* ── Card grid ── */
     .bills-grid {
-      padding: 0 0 3rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      margin: 1.25rem 0 3rem;
     }
 
-    /* ── Bill row (article-list style) ── */
+    /* ── Bill card ── */
     .bill-card {
-      border-bottom: 1px solid var(--rule);
-      padding: 1.25rem 0;
+      background: var(--bg);
+      padding: 1.25rem 1.1rem 1rem;
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: background 0.12s;
+      min-height: 180px;
     }
-    .bill-card:first-child {
-      border-top: none;
-    }
+    .bill-card:hover { background: #f5f5f5; }
 
-    .card-top {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
+    .card-level {
+      font-family: var(--sans);
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
     }
     .card-title {
       font-family: var(--serif);
-      font-size: 1.15rem;
+      font-size: 1rem;
       font-weight: 700;
-      line-height: 1.3;
+      line-height: 1.35;
       color: var(--text);
+      flex: 1;
     }
-    .card-title a {
-      color: var(--text);
-      text-decoration: none;
-    }
-    .card-title a:hover { text-decoration: underline; }
-
-    /* Summary excerpt — italic serif */
-    .card-summary {
+    .card-excerpt {
       font-family: var(--serif);
       font-style: italic;
-      font-size: 0.92rem;
-      color: #333;
-      line-height: 1.55;
+      font-size: 0.85rem;
+      color: #444;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
-    .card-summary .truncated { display: block; }
-    .card-summary .full      { display: none; }
-    .card-summary.expanded .truncated { display: none; }
-    .card-summary.expanded .full      { display: block; }
-
-    /* Meta line — small caps sans-serif */
     .card-meta {
       font-family: var(--sans);
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       color: var(--text-muted);
-      font-variant: small-caps;
-      letter-spacing: 0.04em;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 0.3rem;
-    }
-    .card-source { color: var(--text); font-weight: 600; }
-    .meta-sep { color: #bbb; margin: 0 0.1rem; }
-
-    /* Tags */
-    .card-tags {
-      display: flex;
-      flex-wrap: wrap;
       gap: 0.25rem;
-      margin-top: 0.1rem;
-    }
-    .tag-chip {
-      font-family: var(--sans);
-      font-size: 0.65rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      border: 1px solid var(--rule);
-      padding: 0.05rem 0.35rem;
-    }
-
-    /* Card actions — plain text links */
-    .card-actions {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-top: 0.25rem;
-    }
-    .card-actions a {
-      font-family: var(--sans);
-      font-size: 0.76rem;
-      color: var(--text);
-      text-decoration: none;
-      border-bottom: 1px solid var(--text);
-      padding-bottom: 0.05rem;
-    }
-    .card-actions a:hover { color: var(--wordmark); border-bottom-color: var(--wordmark); }
-    .expand-btn {
-      background: none;
-      border: none;
-      font-family: var(--sans);
-      font-size: 0.74rem;
-      color: var(--text-muted);
-      cursor: pointer;
-      padding: 0;
-      text-decoration: underline;
-    }
-    .expand-btn:hover { color: var(--text); }
-
-    /* ── Empty state ── */
-    .empty-state {
-      display: none;
-      padding: 3rem 0;
-      color: var(--text-muted);
+      margin-top: auto;
+      padding-top: 0.5rem;
       border-top: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
-      margin: 1rem 0;
     }
-    .empty-state.visible { display: block; }
-    .empty-state h3 {
-      font-family: var(--serif);
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
-      color: var(--text);
+    .card-meta .sep { color: #ccc; }
+    .card-read {
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      margin-left: auto;
+      white-space: nowrap;
     }
-    .empty-state p { font-family: var(--sans); font-size: 0.85rem; }
 
-    /* ── Loading ── */
+    /* ── Loading / empty ── */
     .loading {
       padding: 3rem 0;
       font-family: var(--sans);
       font-size: 0.85rem;
       color: var(--text-muted);
     }
+    .empty-state { display: none; padding: 3rem 0; color: var(--text-muted); }
+    .empty-state.visible { display: block; }
+    .empty-state h3 { font-family: var(--serif); font-size: 1rem; margin-bottom: 0.4rem; }
+    .empty-state p { font-family: var(--sans); font-size: 0.83rem; }
+    .expand-btn {
+      background: none; border: none;
+      font-family: var(--sans); font-size: 0.8rem;
+      color: var(--text-muted); cursor: pointer; padding: 0; text-decoration: underline;
+    }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 1000;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .modal-overlay.open {
+      display: flex;
+    }
+    .modal {
+      background: #fff;
+      width: 100%;
+      max-width: 700px;
+      max-height: 88vh;
+      overflow-y: auto;
+      border-top: 3px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      animation: slideUp 0.22s ease-out;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    .modal-header {
+      padding: 1.25rem 1.5rem 0.75rem;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 1;
+    }
+    .modal-title {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--text);
+      flex: 1;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0 0.15rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .modal-close:hover { color: var(--text); }
+    .modal-meta {
+      padding: 0.6rem 1.5rem;
+      border-bottom: 1px solid var(--rule);
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      align-items: center;
+    }
+    .modal-meta .sep { color: #ccc; }
+    .modal-body {
+      padding: 1.25rem 1.5rem 1.5rem;
+      flex: 1;
+    }
+
+    /* Structured summary sections */
+    .summary-section {
+      margin-bottom: 1.25rem;
+    }
+    .summary-section-label {
+      font-family: var(--sans);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .summary-section p {
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--text);
+    }
+    .summary-section ul {
+      list-style: none;
+      padding: 0;
+    }
+    .summary-section ul li {
+      font-family: var(--serif);
+      font-size: 0.93rem;
+      line-height: 1.6;
+      color: var(--text);
+      padding: 0.3rem 0 0.3rem 1.1rem;
+      position: relative;
+      border-bottom: 1px solid var(--rule);
+    }
+    .summary-section ul li:last-child { border-bottom: none; }
+    .summary-section ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--text-muted);
+    }
+
+    /* AI disclaimer inside modal */
+    .modal-disclaimer {
+      margin-top: 1.25rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--rule);
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-style: italic;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .modal-actions {
+      padding: 0.85rem 1.5rem 1.25rem;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .modal-actions a {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--text);
+      padding-bottom: 0.05rem;
+    }
+    .modal-actions a:hover { opacity: 0.6; }
 
     /* ── Footer ── */
     footer {
       border-top: 2px solid var(--border);
-      padding: 1.5rem 0 2rem;
-      margin-top: 1rem;
+      padding: 1.25rem 0 2rem;
     }
-    footer .container {
+    footer .page-inner {
       font-family: var(--sans);
-      font-size: 0.75rem;
+      font-size: 0.73rem;
       color: var(--text-muted);
       line-height: 1.8;
     }
     footer a { color: var(--text); }
     footer a:hover { text-decoration: underline; }
-    .footer-credits {
-      margin-bottom: 0.5rem;
-    }
-    .footer-disclaimer {
-      font-style: italic;
-      color: var(--text-muted);
-      max-width: 640px;
-    }
+    .footer-disclaimer { font-style: italic; max-width: 640px; }
 
     /* ── Responsive ── */
-    @media (max-width: 520px) {
+    @media (max-width: 560px) {
       .wordmark { font-size: 2.2rem; }
       .masthead-top { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
       .filter-label { display: none; }
+      .modal { max-height: 94vh; }
     }
   </style>
 </head>
@@ -409,26 +479,25 @@
   </div>
 </header>
 
-<!-- ── Editorial note (disclaimer) ── -->
+<!-- ── Editorial note ── -->
 <div class="editorial-note">
-  <div class="container">
-    <strong>Editor's note:</strong> Summaries are generated by a local Gemma language model and may contain errors or omissions.
-    Every entry links to its <strong>official source</strong> — always verify before acting on this information.
-    Plain Law is an independent personal project and does not constitute legal advice.
+  <div class="inner">
+    <strong>Editor's note:</strong> Summaries are generated by a local Gemma AI model and may contain errors.
+    Every entry links to its <strong>official source</strong> — always verify before acting on this information. Not legal advice.
   </div>
 </div>
 
 <!-- ── Filter bar ── -->
 <div class="filter-section" id="filter-section" style="display:none">
-  <div class="container">
+  <div class="page-inner">
     <div class="filter-row">
       <span class="filter-label">Level</span>
       <div class="pill-group" id="level-pills">
         <span class="pill active" data-level="">All</span>
-        <span class="pill level-federal" data-level="federal">Federal</span>
-        <span class="pill level-state" data-level="state">State</span>
-        <span class="pill level-county" data-level="county">County</span>
-        <span class="pill level-municipal" data-level="municipality">Municipal</span>
+        <span class="pill" data-level="federal">Federal</span>
+        <span class="pill" data-level="state">State</span>
+        <span class="pill" data-level="county">County</span>
+        <span class="pill" data-level="municipality">Municipal</span>
       </div>
       <div style="margin-left:auto;display:flex;align-items:center;gap:0.5rem;">
         <select class="filter-select" id="state-select" aria-label="Filter by state">
@@ -441,7 +510,7 @@
           <option value="passed">Passed One Chamber</option>
           <option value="enacted">Enacted</option>
         </select>
-        <button class="btn-reset" id="reset-btn" title="Clear all filters">Reset</button>
+        <button class="btn-reset" id="reset-btn">Reset</button>
       </div>
     </div>
     <div class="filter-row" id="tag-row" style="display:none">
@@ -451,130 +520,106 @@
   </div>
 </div>
 
-<!-- ── Main content ── -->
-<main class="container">
+<!-- ── Main ── -->
+<main class="page-inner">
   <div class="results-meta" id="results-meta" style="display:none">
     <span id="results-count" class="results-count">0</span> bills
   </div>
-
   <div class="loading" id="loading">Loading bills…</div>
-
   <div class="bills-grid" id="bills-grid"></div>
-
   <div class="empty-state" id="empty-state">
     <h3>No bills match your filters.</h3>
-    <p>Try adjusting or <button class="expand-btn" onclick="resetFilters()">resetting</button> the filter controls above.</p>
+    <p>Try <button class="expand-btn" onclick="resetFilters()">resetting</button> the filters above.</p>
   </div>
 </main>
 
+<!-- ── Modal ── -->
+<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title-text">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modal-title-text"></h2>
+      <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+    </div>
+    <div class="modal-meta" id="modal-meta"></div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-actions" id="modal-actions"></div>
+  </div>
+</div>
+
 <!-- ── Footer ── -->
 <footer>
-  <div class="container">
+  <div class="page-inner">
     <p class="footer-credits">
       <a href="https://github.com/callmeradical/plain-law">GitHub</a> ·
       <a href="https://github.com/callmeradical/plain-law/blob/main/CONTRIBUTING.md">Add your locale</a> ·
       <a href="faq.html">FAQ</a> ·
-      State data: <a href="https://legiscan.com" target="_blank" rel="noopener">LegiScan</a> (CC BY 4.0) ·
-      Federal data: <a href="https://api.congress.gov" target="_blank" rel="noopener">Congress.gov</a> (public domain) ·
+      Federal data: <a href="https://api.congress.gov" target="_blank" rel="noopener">Congress.gov</a> ·
+      State data: <a href="https://legiscan.com" target="_blank" rel="noopener">LegiScan</a> ·
       Summaries: <a href="https://ollama.com/library/gemma3" target="_blank" rel="noopener">Gemma 3</a> via Ollama
     </p>
     <p class="footer-disclaimer">
-      Plain Law is an independent personal project. Summaries are AI-generated and may contain errors.
-      The content on this site does not represent the views of the operator, their employer, or any affiliated organization.
-      This is not legal advice. Always consult the official legislative source.
+      Plain Law is an independent personal project. Content does not represent the views of the operator or any affiliated organization. Not legal advice.
     </p>
   </div>
 </footer>
 
 <script>
-/* ────────────────────────────────────────────────────────────
-   Plain Law — client-side filter SPA
-   No dependencies. Works fully offline once bills.json loaded.
-   ──────────────────────────────────────────────────────────── */
+/* Plain Law — cards + modal */
 
-// Set masthead date
 (function() {
   const d = document.getElementById('masthead-date');
-  if (d) {
-    d.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-  }
+  if (d) d.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 })();
 
 let allBills = [];
-let activeFilters = {
-  level: '',
-  state: '',
-  status: '',
-  tag: ''
-};
+let activeFilters = { level: '', state: '', status: '', tag: '' };
 
-// ── Bootstrap ───────────────────────────────────────────────
+// ── Bootstrap ──────────────────────────────────────────────
 async function init() {
   try {
-    // bills.jsonl — one JSON object per line, appended as each bill finishes
     const resp = await fetch('bills.json');
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const text = await resp.text();
-    allBills = text
-      .split('\n')
-      .filter(line => line.trim().length > 0)
-      .map(line => JSON.parse(line));
+    allBills = text.split('\n').filter(l => l.trim()).map(l => JSON.parse(l));
   } catch (err) {
     document.getElementById('loading').textContent =
-      'Could not load bills.jsonl. ' + (allBills.length === 0
-        ? 'The pipeline may not have run yet.'
-        : err.message);
+      'Could not load bills. The pipeline may not have run yet. (' + err.message + ')';
     return;
   }
-
   document.getElementById('loading').style.display = 'none';
   document.getElementById('filter-section').style.display = '';
   document.getElementById('results-meta').style.display = '';
-
   populateDynamicFilters();
   restoreFiltersFromHash();
   renderBills();
-
   bindEvents();
+  bindModal();
   window.addEventListener('hashchange', onHashChange);
 }
 
-// ── Dynamic filter population ───────────────────────────────
+// ── Filters ────────────────────────────────────────────────
 function populateDynamicFilters() {
-  // States
   const stateSet = new Set(allBills.map(b => b.state).filter(Boolean));
   const stateSelect = document.getElementById('state-select');
   [...stateSet].sort().forEach(st => {
     const opt = document.createElement('option');
-    opt.value = st;
-    opt.textContent = st;
+    opt.value = st; opt.textContent = st;
     stateSelect.appendChild(opt);
   });
-
-  // Tags
   const tagSet = new Set();
   allBills.forEach(b => (b.tags || []).forEach(t => tagSet.add(t)));
   const tagPills = document.getElementById('tag-pills');
   const allPill = document.createElement('span');
-  allPill.className = 'pill active';
-  allPill.dataset.tag = '';
-  allPill.textContent = 'All';
+  allPill.className = 'pill active'; allPill.dataset.tag = ''; allPill.textContent = 'All';
   tagPills.appendChild(allPill);
-
   [...tagSet].sort().forEach(tag => {
     const p = document.createElement('span');
-    p.className = 'pill';
-    p.dataset.tag = tag;
-    p.textContent = tag;
+    p.className = 'pill'; p.dataset.tag = tag; p.textContent = tag;
     tagPills.appendChild(p);
   });
-
-  if (tagSet.size > 0) {
-    document.getElementById('tag-row').style.display = '';
-  }
+  if (tagSet.size > 0) document.getElementById('tag-row').style.display = '';
 }
 
-// ── Filter state & hash sync ─────────────────────────────────
 function filtersToHash(f) {
   const parts = [];
   if (f.level)  parts.push('level='  + encodeURIComponent(f.level));
@@ -583,56 +628,29 @@ function filtersToHash(f) {
   if (f.tag)    parts.push('tag='    + encodeURIComponent(f.tag));
   return parts.length ? '#' + parts.join('&') : '#';
 }
-
 function hashToFilters() {
   const raw = window.location.hash.replace(/^#/, '');
   const f = { level: '', state: '', status: '', tag: '' };
   raw.split('&').forEach(part => {
     const [k, v] = part.split('=');
-    if (k && v !== undefined && f.hasOwnProperty(k)) f[k] = decodeURIComponent(v);
+    if (k && v !== undefined && Object.prototype.hasOwnProperty.call(f, k)) f[k] = decodeURIComponent(v);
   });
   return f;
 }
-
-function restoreFiltersFromHash() {
-  const f = hashToFilters();
-  activeFilters = f;
-  applyFilterUI();
-}
-
+function restoreFiltersFromHash() { activeFilters = hashToFilters(); applyFilterUI(); }
 function applyFilterUI() {
-  // Level pills
-  document.querySelectorAll('#level-pills .pill').forEach(p => {
-    p.classList.toggle('active', p.dataset.level === activeFilters.level);
-  });
-  // State select
+  document.querySelectorAll('#level-pills .pill').forEach(p => p.classList.toggle('active', p.dataset.level === activeFilters.level));
   document.getElementById('state-select').value = activeFilters.state;
-  // Status select
   document.getElementById('status-select').value = activeFilters.status;
-  // Tag pills
-  document.querySelectorAll('#tag-pills .pill').forEach(p => {
-    p.classList.toggle('active', p.dataset.tag === activeFilters.tag);
-  });
+  document.querySelectorAll('#tag-pills .pill').forEach(p => p.classList.toggle('active', p.dataset.tag === activeFilters.tag));
 }
+function pushHash() { history.replaceState(null, '', filtersToHash(activeFilters)); }
+function onHashChange() { restoreFiltersFromHash(); renderBills(); }
 
-function pushHash() {
-  const hash = filtersToHash(activeFilters);
-  history.replaceState(null, '', hash);
-}
-
-function onHashChange() {
-  restoreFiltersFromHash();
-  renderBills();
-}
-
-// ── Rendering ────────────────────────────────────────────────
 function matchesFilters(bill) {
   const { level, state, status, tag } = activeFilters;
-
   if (level && bill.level !== level) return false;
-
   if (state && bill.state !== state) return false;
-
   if (status) {
     const s = (bill.status || '').toLowerCase();
     if (status === 'introduced' && !s.includes('introduc')) return false;
@@ -640,167 +658,216 @@ function matchesFilters(bill) {
     if (status === 'passed'     && !(s.includes('passed') || s.includes('agreed'))) return false;
     if (status === 'enacted'    && !(s.includes('enact') || s.includes('signed') || s.includes('law'))) return false;
   }
-
   if (tag && !(bill.tags || []).includes(tag)) return false;
-
   return true;
 }
 
+// ── Render ─────────────────────────────────────────────────
 function renderBills() {
   const grid = document.getElementById('bills-grid');
   const empty = document.getElementById('empty-state');
   const countEl = document.getElementById('results-count');
-
   grid.innerHTML = '';
   const visible = allBills.filter(matchesFilters);
   countEl.textContent = visible.length;
-
-  if (visible.length === 0) {
-    empty.classList.add('visible');
-    return;
-  }
+  if (visible.length === 0) { empty.classList.add('visible'); return; }
   empty.classList.remove('visible');
-
-  visible.forEach(bill => {
-    grid.appendChild(buildCard(bill));
-  });
+  visible.forEach(bill => grid.appendChild(buildCard(bill)));
 }
 
 function buildCard(bill) {
   const card = document.createElement('article');
   card.className = 'bill-card';
+  card.dataset.billId = bill.id;
 
-  // Title
-  const top = document.createElement('div');
-  top.className = 'card-top';
+  const level = document.createElement('div');
+  level.className = 'card-level';
+  level.textContent = (bill.level || 'federal').toUpperCase() + (bill.state ? ' · ' + bill.state : '');
 
   const title = document.createElement('h3');
   title.className = 'card-title';
-  if (bill.file) {
-    const titleLink = document.createElement('a');
-    titleLink.href = bill.file;
-    titleLink.textContent = bill.title || '(Untitled)';
-    title.appendChild(titleLink);
-  } else {
-    title.textContent = bill.title || '(Untitled)';
-  }
-  top.appendChild(title);
+  title.textContent = bill.title || '(Untitled)';
 
-  // Summary excerpt — italic serif, 2-line preview
-  const summaryWrap = document.createElement('div');
-  summaryWrap.className = 'card-summary';
-  const fullText = bill.summary || '';
-  const preview = truncateText(fullText, 200);
-  const needsExpand = fullText.length > preview.length;
+  const excerpt = document.createElement('p');
+  excerpt.className = 'card-excerpt';
+  excerpt.textContent = truncateText(bill.summary || '', 160) + '…';
 
-  const truncEl = document.createElement('span');
-  truncEl.className = 'truncated';
-  truncEl.textContent = preview + (needsExpand ? '…' : '');
-
-  const fullEl = document.createElement('span');
-  fullEl.className = 'full';
-  fullEl.textContent = fullText;
-
-  summaryWrap.appendChild(truncEl);
-  summaryWrap.appendChild(fullEl);
-
-  let expandBtn;
-  if (needsExpand) {
-    expandBtn = document.createElement('button');
-    expandBtn.className = 'expand-btn';
-    expandBtn.textContent = ' Read more';
-    expandBtn.addEventListener('click', () => {
-      const expanded = summaryWrap.classList.toggle('expanded');
-      expandBtn.textContent = expanded ? ' Show less' : ' Read more';
-    });
-    summaryWrap.appendChild(expandBtn);
-  }
-
-  // Meta row: Source · Status · Date (small caps sans-serif)
   const meta = document.createElement('div');
   meta.className = 'card-meta';
-
   if (bill.source) {
     const src = document.createElement('span');
-    src.className = 'card-source';
     src.textContent = bill.source;
     meta.appendChild(src);
   }
-
-  if (bill.status) {
-    const sep = document.createElement('span');
-    sep.className = 'meta-sep';
-    sep.textContent = '·';
-    meta.appendChild(sep);
-
-    const st = document.createElement('span');
-    st.textContent = bill.status;
-    meta.appendChild(st);
-  }
-
   if (bill.status_date) {
-    const sep2 = document.createElement('span');
-    sep2.className = 'meta-sep';
-    sep2.textContent = '·';
-    meta.appendChild(sep2);
-
-    const dt = document.createElement('span');
-    dt.textContent = bill.status_date;
-    meta.appendChild(dt);
+    const sep = document.createElement('span'); sep.className = 'sep'; sep.textContent = '·';
+    const dt = document.createElement('span'); dt.textContent = bill.status_date;
+    meta.appendChild(sep); meta.appendChild(dt);
   }
+  const readHint = document.createElement('span');
+  readHint.className = 'card-read';
+  readHint.textContent = 'Read →';
+  meta.appendChild(readHint);
 
-  if (bill.level) {
-    const sep3 = document.createElement('span');
-    sep3.className = 'meta-sep';
-    sep3.textContent = '·';
-    meta.appendChild(sep3);
-
-    const lv = document.createElement('span');
-    lv.textContent = bill.level;
-    meta.appendChild(lv);
-  }
-
-  // Tags
-  let tagsEl = null;
-  if (bill.tags && bill.tags.length) {
-    tagsEl = document.createElement('div');
-    tagsEl.className = 'card-tags';
-    bill.tags.forEach(t => {
-      const chip = document.createElement('span');
-      chip.className = 'tag-chip';
-      chip.textContent = t;
-      tagsEl.appendChild(chip);
-    });
-  }
-
-  // Actions — plain text links
-  const actions = document.createElement('div');
-  actions.className = 'card-actions';
-
-  if (bill.file) {
-    const summaryLink = document.createElement('a');
-    summaryLink.href = bill.file;
-    summaryLink.textContent = 'Full summary →';
-    actions.appendChild(summaryLink);
-  }
-
-  if (bill.url) {
-    const srcLink = document.createElement('a');
-    srcLink.href = bill.url;
-    srcLink.target = '_blank';
-    srcLink.rel = 'noopener noreferrer';
-    srcLink.textContent = 'Official source ↗';
-    actions.appendChild(srcLink);
-  }
-
-  // Assemble
-  card.appendChild(top);
-  card.appendChild(summaryWrap);
+  card.appendChild(level);
+  card.appendChild(title);
+  card.appendChild(excerpt);
   card.appendChild(meta);
-  if (tagsEl) card.appendChild(tagsEl);
-  card.appendChild(actions);
-
   return card;
+}
+
+// ── Modal ──────────────────────────────────────────────────
+function bindModal() {
+  const overlay = document.getElementById('modal-overlay');
+  document.getElementById('bills-grid').addEventListener('click', e => {
+    const card = e.target.closest('.bill-card');
+    if (!card) return;
+    const bill = allBills.find(b => b.id === card.dataset.billId);
+    if (bill) openModal(bill);
+  });
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+}
+
+function openModal(bill) {
+  document.getElementById('modal-title-text').textContent = bill.title || '(Untitled)';
+
+  // Meta bar
+  const metaEl = document.getElementById('modal-meta');
+  metaEl.innerHTML = '';
+  const addMeta = (text, cls) => {
+    const s = document.createElement('span');
+    if (cls) s.className = cls;
+    s.textContent = text;
+    metaEl.appendChild(s);
+  };
+  if (bill.source) addMeta(bill.source);
+  if (bill.status) { addMeta('·', 'sep'); addMeta(bill.status); }
+  if (bill.status_date) { addMeta('·', 'sep'); addMeta(bill.status_date); }
+  if (bill.level) { addMeta('·', 'sep'); addMeta(bill.level); }
+
+  // Body — structured summary
+  const body = document.getElementById('modal-body');
+  body.innerHTML = '';
+  body.appendChild(buildStructuredSummary(bill.summary || ''));
+
+  // Actions
+  const actions = document.getElementById('modal-actions');
+  actions.innerHTML = '';
+  if (bill.url) {
+    const a = document.createElement('a');
+    a.href = bill.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    a.textContent = 'Official source ↗';
+    actions.appendChild(a);
+  }
+  if (bill.file) {
+    const a = document.createElement('a');
+    a.href = bill.file;
+    a.textContent = 'Full summary page →';
+    actions.appendChild(a);
+  }
+
+  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('modal').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function buildStructuredSummary(raw) {
+  const frag = document.createDocumentFragment();
+
+  // Split into paragraphs
+  const paras = raw.split(/\n\n+/).map(p => p.trim()).filter(Boolean);
+
+  if (paras.length === 0) {
+    const p = document.createElement('p');
+    p.style.fontFamily = 'Georgia, serif';
+    p.style.color = '#6b6b6b';
+    p.textContent = 'No summary available.';
+    frag.appendChild(p);
+    return frag;
+  }
+
+  // First paragraph = overview
+  const overviewSec = makeSection('Overview', [paras[0]], 'p');
+  frag.appendChild(overviewSec);
+
+  // Remaining paragraphs → key takeaways as bullet list
+  if (paras.length > 1) {
+    const takeaways = paras.slice(1).flatMap(p => {
+      // If a paragraph looks like it has multiple sentences, split them
+      return p.split(/(?<=[.!?])\s+(?=[A-Z])/).map(s => s.trim()).filter(s => s.length > 20);
+    });
+    if (takeaways.length > 0) {
+      frag.appendChild(makeSection('Key Takeaways', takeaways, 'ul'));
+    }
+  }
+
+  // AI disclaimer
+  const disc = document.createElement('p');
+  disc.className = 'modal-disclaimer';
+  disc.textContent = 'This summary was generated by a local AI model (Gemma). It may contain errors or omissions. Always read the official source before making decisions.';
+  frag.appendChild(disc);
+
+  return frag;
+}
+
+function makeSection(label, items, type) {
+  const sec = document.createElement('div');
+  sec.className = 'summary-section';
+
+  const lbl = document.createElement('div');
+  lbl.className = 'summary-section-label';
+  lbl.textContent = label;
+  sec.appendChild(lbl);
+
+  if (type === 'p') {
+    const p = document.createElement('p');
+    p.textContent = items[0];
+    sec.appendChild(p);
+  } else {
+    const ul = document.createElement('ul');
+    items.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      ul.appendChild(li);
+    });
+    sec.appendChild(ul);
+  }
+  return sec;
+}
+
+// ── Events ─────────────────────────────────────────────────
+function bindEvents() {
+  document.getElementById('level-pills').addEventListener('click', e => {
+    const pill = e.target.closest('.pill');
+    if (!pill) return;
+    activeFilters.level = pill.dataset.level;
+    applyFilterUI(); pushHash(); renderBills();
+  });
+  document.getElementById('tag-pills').addEventListener('click', e => {
+    const pill = e.target.closest('.pill');
+    if (!pill) return;
+    activeFilters.tag = pill.dataset.tag;
+    applyFilterUI(); pushHash(); renderBills();
+  });
+  document.getElementById('state-select').addEventListener('change', e => {
+    activeFilters.state = e.target.value; pushHash(); renderBills();
+  });
+  document.getElementById('status-select').addEventListener('change', e => {
+    activeFilters.status = e.target.value; pushHash(); renderBills();
+  });
+  document.getElementById('reset-btn').addEventListener('click', resetFilters);
+}
+
+function resetFilters() {
+  activeFilters = { level: '', state: '', status: '', tag: '' };
+  applyFilterUI(); pushHash(); renderBills();
 }
 
 function truncateText(text, maxChars) {
@@ -809,63 +876,6 @@ function truncateText(text, maxChars) {
   return cut > 0 ? text.slice(0, cut) : text.slice(0, maxChars);
 }
 
-function statusChipClass(status) {
-  const s = (status || '').toLowerCase();
-  if (s.includes('introduc'))                            return 'chip-introduced';
-  if (s.includes('committee'))                           return 'chip-committee';
-  if (s.includes('passed') || s.includes('agreed'))     return 'chip-passed';
-  if (s.includes('enact') || s.includes('signed') || s.includes('law')) return 'chip-enacted';
-  return 'chip-other';
-}
-
-// ── Event binding ─────────────────────────────────────────────
-function bindEvents() {
-  // Level pills
-  document.getElementById('level-pills').addEventListener('click', e => {
-    const pill = e.target.closest('.pill');
-    if (!pill) return;
-    activeFilters.level = pill.dataset.level;
-    applyFilterUI();
-    pushHash();
-    renderBills();
-  });
-
-  // Tag pills
-  document.getElementById('tag-pills').addEventListener('click', e => {
-    const pill = e.target.closest('.pill');
-    if (!pill) return;
-    activeFilters.tag = pill.dataset.tag;
-    applyFilterUI();
-    pushHash();
-    renderBills();
-  });
-
-  // State select
-  document.getElementById('state-select').addEventListener('change', e => {
-    activeFilters.state = e.target.value;
-    pushHash();
-    renderBills();
-  });
-
-  // Status select
-  document.getElementById('status-select').addEventListener('change', e => {
-    activeFilters.status = e.target.value;
-    pushHash();
-    renderBills();
-  });
-
-  // Reset
-  document.getElementById('reset-btn').addEventListener('click', resetFilters);
-}
-
-function resetFilters() {
-  activeFilters = { level: '', state: '', status: '', tag: '' };
-  applyFilterUI();
-  pushHash();
-  renderBills();
-}
-
-// ── Go ────────────────────────────────────────────────────────
 init();
 </script>
 </body>
