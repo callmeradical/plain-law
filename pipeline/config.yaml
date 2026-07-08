@@ -4,8 +4,8 @@
 model:
   provider: ollama
   host: http://cleanthes.taila4fb6a.ts.net:11434
-  model: gemma3:27b
-  fallback: gemma4:31b
+  model: gemma3:12b
+  fallback: gemma3:12b
   timeout: 120  # seconds
 
 summarizer:
@@ -24,7 +24,7 @@ output:
   directory: output/
   github_pages:
     enabled: true
-    repo: callmeradical/REPO_NAME_HERE
+    repo: callmeradical/plain-law
     branch: gh-pages
     commit_message: "chore: update summaries [{date}]"
 
