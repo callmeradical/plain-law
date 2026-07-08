@@ -9,198 +9,268 @@
 
     :root {
       --bg:        #ffffff;
-      --bg-subtle: #f5f6f7;
-      --border:    #d0d5db;
-      --text:      #1a1d23;
-      --text-muted:#5c6370;
-      --text-link: #1a5276;
-      --accent:    #1a5276;
-      --warn-bg:   #fffbeb;
-      --warn-border:#d97706;
-      --warn-text: #78350f;
+      --text:      #1a1a1a;
+      --text-muted:#6b6b6b;
+      --border:    #222222;
+      --rule:      #d0d0d0;
+      --wordmark:  #a00000;
+      --serif:     Georgia, "Times New Roman", Times, serif;
+      --sans:      -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: var(--serif);
       background: var(--bg);
       color: var(--text);
-      line-height: 1.65;
-      font-size: 16px;
+      line-height: 1.7;
+      font-size: 17px;
     }
 
-    a { color: var(--text-link); }
+    a { color: var(--text); }
     a:hover { text-decoration: underline; }
 
-    /* ── Header ── */
-    header {
-      background: var(--text);
-      color: #fff;
-      padding: 1.25rem 1.5rem;
+    /* ── Masthead ── */
+    .masthead {
+      border-top: 3px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 0 0.75rem;
+    }
+    .masthead-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .masthead-top {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.75rem 0 0.5rem;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 0.4rem;
+    }
+    .wordmark {
+      font-family: var(--serif);
+      font-size: 3.2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .wordmark .accent { color: var(--wordmark); }
+    .masthead-nav {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-end;
+      padding-bottom: 0.15rem;
+    }
+    .masthead-nav a {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+    .masthead-nav a:hover { border-bottom-color: var(--text); }
+    .masthead-bottom {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      flex-wrap: wrap;
     }
-    .site-name {
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: #fff;
-      text-decoration: none;
+    .masthead-tagline {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
     }
-    .site-name span { color: #7ec8e3; }
-    .tagline { font-size: 0.85rem; color: #b0b8c4; margin-top: 0.15rem; }
-    nav a {
-      color: #b0b8c4;
-      font-size: 0.9rem;
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: color 0.15s, border-color 0.15s;
+    .masthead-date {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      color: var(--text-muted);
     }
-    nav a:hover { color: #fff; border-color: #fff; }
 
     /* ── Layout ── */
     .container {
-      max-width: 760px;
+      max-width: 860px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
 
+    /* ── Page header ── */
     .page-header {
-      padding: 2.5rem 0 1.5rem;
-      border-bottom: 1px solid var(--border);
+      padding: 2.5rem 0 1.25rem;
+      border-bottom: 2px solid var(--border);
       margin-bottom: 2rem;
     }
     .page-header h1 {
-      font-size: 1.75rem;
+      font-family: var(--serif);
+      font-size: 2.2rem;
       font-weight: 700;
+      line-height: 1.15;
       color: var(--text);
     }
     .page-header p {
-      margin-top: 0.5rem;
+      margin-top: 0.6rem;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1rem;
       color: var(--text-muted);
-      max-width: 560px;
+      max-width: 600px;
+      line-height: 1.55;
     }
 
     /* ── Section ── */
     .faq-section {
       margin-bottom: 2.5rem;
     }
-    .faq-section h2 {
-      font-size: 1.05rem;
+    .faq-section-heading {
+      font-family: var(--sans);
+      font-size: 0.68rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--accent);
-      border-bottom: 2px solid var(--border);
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--rule);
       padding-bottom: 0.4rem;
       margin-bottom: 1.25rem;
     }
 
-    /* ── FAQ item ── */
+    /* ── FAQ item (editorial details) ── */
     details {
-      border: 1px solid var(--border);
-      border-radius: 7px;
-      margin-bottom: 0.6rem;
+      border-top: 1px solid var(--rule);
       overflow: hidden;
     }
+    details:last-child {
+      border-bottom: 1px solid var(--rule);
+    }
     summary {
-      padding: 0.9rem 1.1rem;
-      font-weight: 600;
-      font-size: 0.92rem;
+      padding: 0.85rem 0;
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: 1rem;
       cursor: pointer;
       list-style: none;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 0.5rem;
-      background: var(--bg-subtle);
+      gap: 0.75rem;
       user-select: none;
+      color: var(--text);
     }
     summary::-webkit-details-marker { display: none; }
     summary::after {
       content: '+';
+      font-family: var(--sans);
       font-size: 1.1rem;
       color: var(--text-muted);
       font-weight: 400;
       flex-shrink: 0;
-      transition: transform 0.15s;
     }
     details[open] summary::after {
       content: '−';
     }
-    details[open] summary {
-      border-bottom: 1px solid var(--border);
-    }
     .faq-body {
-      padding: 1rem 1.25rem 1.1rem;
-      font-size: 0.9rem;
-      line-height: 1.7;
+      padding: 0 0 1.25rem;
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--text);
     }
     .faq-body p + p { margin-top: 0.75rem; }
     .faq-body ul, .faq-body ol {
-      padding-left: 1.35rem;
+      padding-left: 1.5rem;
       margin-top: 0.5rem;
     }
-    .faq-body li { margin-bottom: 0.3rem; }
+    .faq-body li { margin-bottom: 0.35rem; }
+    .faq-body strong { font-weight: 700; }
+    .faq-body em { font-style: italic; }
+    .faq-body code {
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 0.82em;
+      background: #f5f5f5;
+      padding: 0.1em 0.3em;
+      border: 1px solid #e0e0e0;
+    }
+    .faq-body a { color: var(--text); text-decoration: underline; }
 
     /* Prompt block */
     .prompt-block {
-      background: #f1f5f9;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.9rem 1rem;
+      background: #f9f9f9;
+      border: 1px solid var(--rule);
+      border-left: 3px solid var(--border);
+      padding: 1rem 1.1rem;
       font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       white-space: pre-wrap;
       word-break: break-word;
-      margin-top: 0.75rem;
-      color: #374151;
-      line-height: 1.6;
+      margin-top: 0.85rem;
+      color: #333;
+      line-height: 1.65;
     }
 
-    /* Warning box */
-    .warning-box {
-      background: var(--warn-bg);
-      border-left: 4px solid var(--warn-border);
-      padding: 0.75rem 1rem;
-      border-radius: 0 6px 6px 0;
-      margin-top: 0.75rem;
-      font-size: 0.875rem;
-      color: var(--warn-text);
+    /* Editorial warning note (replaces yellow warning box) */
+    .editorial-warning {
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 0.6rem 0;
+      margin: 0.75rem 0;
+      font-family: var(--sans);
+      font-style: italic;
+      font-size: 0.82rem;
+      color: var(--text-muted);
     }
-    .warning-box strong { color: #92400e; }
+    .editorial-warning strong { color: var(--text); font-style: normal; }
 
     /* ── Footer ── */
     footer {
-      background: var(--text);
-      color: #9ca3af;
-      padding: 1.5rem;
-      font-size: 0.8rem;
-      text-align: center;
-      line-height: 1.8;
+      border-top: 2px solid var(--border);
+      padding: 1.5rem 0 2rem;
       margin-top: 3rem;
     }
-    footer a { color: #7ec8e3; }
-    footer a:hover { color: #fff; }
+    footer .container {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+    footer a { color: var(--text); }
+    footer a:hover { text-decoration: underline; }
+    .footer-credits { margin-bottom: 0.5rem; }
+    .footer-disclaimer {
+      font-style: italic;
+      color: var(--text-muted);
+      max-width: 640px;
+    }
 
     @media (max-width: 520px) {
-      header { flex-direction: column; align-items: flex-start; }
+      .wordmark { font-size: 2.2rem; }
+      .masthead-top { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+      .page-header h1 { font-size: 1.7rem; }
     }
   </style>
 </head>
 <body>
 
-<!-- ── Header ── -->
-<header>
-  <div>
-    <a href="index.html" class="site-name">Plain<span>Law</span></a>
-    <div class="tagline">Proposed legislation in plain English</div>
+<!-- ── Masthead ── -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-top">
+      <a href="index.html" class="wordmark">Plain<span class="accent">Law</span></a>
+      <nav class="masthead-nav">
+        <a href="index.html">← Browse bills</a>
+        <a href="https://github.com/callmeradical/plain-law" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+    <div class="masthead-bottom">
+      <span class="masthead-tagline">Proposed legislation in plain English</span>
+      <span class="masthead-date" id="masthead-date"></span>
+    </div>
   </div>
-  <nav>
-    <a href="index.html">← Browse bills</a>
-  </nav>
 </header>
 
 <!-- ── Page content ── -->
@@ -212,7 +282,7 @@
 
   <!-- ── About ── -->
   <section class="faq-section">
-    <h2>About the project</h2>
+    <h2 class="faq-section-heading">About the project</h2>
 
     <details open>
       <summary>What is Plain Law?</summary>
@@ -235,10 +305,10 @@
     <details>
       <summary>Is this official government information?</summary>
       <div class="faq-body">
-        <div class="warning-box">
+        <div class="editorial-warning">
           <strong>No.</strong> Plain Law is not an official government source and is not endorsed by any government.
         </div>
-        <p style="margin-top:0.75rem">Bill text, status, and official sources come from public government APIs (Congress.gov, LegiScan). The summaries are AI-generated interpretations of that data and may be incomplete, oversimplified, or wrong.</p>
+        <p>Bill text, status, and official sources come from public government APIs (Congress.gov, LegiScan). The summaries are AI-generated interpretations of that data and may be incomplete, oversimplified, or wrong.</p>
         <p>Every summary on this site includes a direct link to the official government text. If accuracy matters for your purposes — and it should — read the original.</p>
       </div>
     </details>
@@ -246,7 +316,7 @@
 
   <!-- ── Impartiality ── -->
   <section class="faq-section">
-    <h2>Impartiality</h2>
+    <h2 class="faq-section-heading">Impartiality</h2>
 
     <details>
       <summary>Is this politically biased?</summary>
@@ -277,7 +347,7 @@
 
   <!-- ── The AI ── -->
   <section class="faq-section">
-    <h2>The AI</h2>
+    <h2 class="faq-section-heading">The AI</h2>
 
     <details>
       <summary>What model is used?</summary>
@@ -345,7 +415,7 @@ PLAIN LANGUAGE SUMMARY:</pre>
 
   <!-- ── The data ── -->
   <section class="faq-section">
-    <h2>The data</h2>
+    <h2 class="faq-section-heading">The data</h2>
 
     <details>
       <summary>Where does the bill data come from?</summary>
@@ -384,7 +454,7 @@ PLAIN LANGUAGE SUMMARY:</pre>
 
   <!-- ── Contributing ── -->
   <section class="faq-section">
-    <h2>Contributing</h2>
+    <h2 class="faq-section-heading">Contributing</h2>
 
     <details>
       <summary>How do I add my state or county?</summary>
@@ -420,16 +490,27 @@ PLAIN LANGUAGE SUMMARY:</pre>
 
 <!-- ── Footer ── -->
 <footer>
-  <p>
-    <a href="https://github.com/callmeradical/plain-law">GitHub</a> ·
-    <a href="https://github.com/callmeradical/plain-law/blob/main/CONTRIBUTING.md">Contributing</a> ·
-    <a href="index.html">Browse bills</a>
-  </p>
-  <p style="margin-top:0.5rem;color:#6b7280;font-size:0.75rem">
-    Plain Law is an independent personal project. Content does not represent the opinions of the operator, their employer, or any affiliated organization.
-    Summaries are AI-generated and may contain errors. Always verify with official sources before making decisions. This is not legal advice.
-  </p>
+  <div class="container">
+    <p class="footer-credits">
+      <a href="https://github.com/callmeradical/plain-law">GitHub</a> ·
+      <a href="https://github.com/callmeradical/plain-law/blob/main/CONTRIBUTING.md">Contributing</a> ·
+      <a href="index.html">Browse bills</a>
+    </p>
+    <p class="footer-disclaimer">
+      Plain Law is an independent personal project. Content does not represent the opinions of the operator, their employer, or any affiliated organization.
+      Summaries are AI-generated and may contain errors. Always verify with official sources before making decisions. This is not legal advice.
+    </p>
+  </div>
 </footer>
+
+<script>
+(function() {
+  const d = document.getElementById('masthead-date');
+  if (d) {
+    d.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  }
+})();
+</script>
 
 </body>
 </html>

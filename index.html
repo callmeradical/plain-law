@@ -10,425 +10,410 @@
 
     :root {
       --bg:        #ffffff;
-      --bg-subtle: #f5f6f7;
-      --bg-card:   #ffffff;
-      --border:    #d0d5db;
-      --text:      #1a1d23;
-      --text-muted:#5c6370;
-      --text-link: #1a5276;
-
-      --federal:   #1a4a8a;
-      --state:     #1e7e34;
-      --county:    #b85a00;
-      --municipal: #5b3a8a;
-
-      --accent:    #1a5276;
-      --accent-bg: #eaf2fb;
-
-      --pill-bg:   #e8ecf0;
-      --pill-sel:  #1a5276;
-      --pill-text-sel: #ffffff;
-
-      --chip-intro-bg:    #dbeafe;
-      --chip-intro-text:  #1e40af;
-      --chip-commit-bg:   #dcfce7;
-      --chip-commit-text: #15803d;
-      --chip-passed-bg:   #fef9c3;
-      --chip-passed-text: #854d0e;
-      --chip-enacted-bg:  #d1fae5;
-      --chip-enacted-text:#065f46;
-      --chip-other-bg:    #f3f4f6;
-      --chip-other-text:  #374151;
+      --text:      #1a1a1a;
+      --text-muted:#6b6b6b;
+      --border:    #222222;
+      --rule:      #d0d0d0;
+      --wordmark:  #a00000;
+      --serif:     Georgia, "Times New Roman", Times, serif;
+      --sans:      -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: var(--serif);
       background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
-      font-size: 16px;
+      line-height: 1.65;
+      font-size: 17px;
     }
 
-    a { color: var(--text-link); }
+    a { color: var(--text); }
     a:hover { text-decoration: underline; }
 
-    /* ── Header ── */
-    header {
-      background: var(--text);
-      color: #fff;
-      padding: 1.25rem 1.5rem;
+    /* ── Masthead ── */
+    .masthead {
+      border-top: 3px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 0 0.75rem;
+      margin-bottom: 0;
+    }
+    .masthead-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .masthead-top {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.75rem 0 0.5rem;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 0.4rem;
+    }
+    .wordmark {
+      font-family: var(--serif);
+      font-size: 3.2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .wordmark .accent { color: var(--wordmark); }
+    .masthead-nav {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-end;
+      padding-bottom: 0.15rem;
+    }
+    .masthead-nav a {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+    .masthead-nav a:hover { border-bottom-color: var(--text); }
+    .masthead-bottom {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      flex-wrap: wrap;
     }
-    .site-name {
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: #fff;
-      text-decoration: none;
+    .masthead-tagline {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
     }
-    .site-name span { color: #7ec8e3; }
-    .tagline {
-      font-size: 0.85rem;
-      color: #b0b8c4;
-      margin-top: 0.15rem;
+    .masthead-date {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      color: var(--text-muted);
     }
-    nav a {
-      color: #b0b8c4;
-      font-size: 0.9rem;
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    nav a:hover { color: #fff; border-color: #fff; }
 
-    /* ── Disclaimer ── */
-    .disclaimer {
-      background: #fffbeb;
-      border-left: 4px solid #d97706;
-      padding: 0.75rem 1.25rem;
-      font-size: 0.875rem;
-      color: #78350f;
+    /* ── Disclaimer (editorial note) ── */
+    .editorial-note {
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 0.6rem 0;
+      margin: 0;
+      background: var(--bg);
     }
-    .disclaimer strong { color: #92400e; }
+    .editorial-note .container {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
 
     /* ── Layout ── */
     .container {
-      max-width: 1100px;
+      max-width: 860px;
       margin: 0 auto;
-      padding: 0 1.25rem;
+      padding: 0 1.5rem;
     }
 
-    /* ── Filter bar ── */
+    /* ── Filter bar (section nav) ── */
     .filter-section {
-      background: var(--bg-subtle);
-      border-bottom: 1px solid var(--border);
-      padding: 1rem 0;
+      border-bottom: 2px solid var(--border);
+      padding: 0.6rem 0;
       position: sticky;
       top: 0;
       z-index: 100;
+      background: var(--bg);
     }
     .filter-section .container {
       display: flex;
       flex-direction: column;
-      gap: 0.65rem;
+      gap: 0.45rem;
     }
     .filter-row {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
     .filter-label {
-      font-size: 0.75rem;
-      font-weight: 600;
+      font-family: var(--sans);
+      font-size: 0.65rem;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.07em;
+      letter-spacing: 0.1em;
       color: var(--text-muted);
-      min-width: 60px;
+      min-width: 52px;
       flex-shrink: 0;
     }
 
-    /* Pills */
-    .pill-group { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    /* Section nav pills → plain text links */
+    .pill-group { display: flex; flex-wrap: wrap; gap: 0 0.1rem; }
     .pill {
       display: inline-block;
-      padding: 0.25rem 0.75rem;
-      border-radius: 999px;
-      background: var(--pill-bg);
+      padding: 0.15rem 0.5rem;
+      font-family: var(--sans);
+      font-size: 0.76rem;
       color: var(--text-muted);
-      font-size: 0.8rem;
-      font-weight: 500;
       cursor: pointer;
-      border: 1px solid transparent;
       user-select: none;
-      transition: background 0.12s, color 0.12s;
-      line-height: 1.4;
+      border-bottom: 2px solid transparent;
+      transition: color 0.1s, border-color 0.1s;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      text-decoration: none;
     }
-    .pill:hover { background: #d6dce3; color: var(--text); }
+    .pill:hover { color: var(--text); border-bottom-color: var(--text); }
     .pill.active {
-      background: var(--pill-sel);
-      color: var(--pill-text-sel);
-      border-color: var(--pill-sel);
+      color: var(--text);
+      font-weight: 700;
+      border-bottom-color: var(--text);
     }
-    .pill.level-federal.active { background: var(--federal); border-color: var(--federal); }
-    .pill.level-state.active   { background: var(--state);   border-color: var(--state); }
-    .pill.level-county.active  { background: var(--county);  border-color: var(--county); }
-    .pill.level-municipal.active { background: var(--municipal); border-color: var(--municipal); }
 
     /* Selects */
     select.filter-select {
-      padding: 0.28rem 0.65rem;
-      border: 1px solid var(--border);
-      border-radius: 6px;
+      padding: 0.2rem 0.5rem;
+      border: 1px solid var(--rule);
+      border-radius: 0;
       background: #fff;
       color: var(--text);
-      font-size: 0.82rem;
+      font-family: var(--sans);
+      font-size: 0.74rem;
       cursor: pointer;
       appearance: none;
       -webkit-appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235c6370'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b6b6b'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
-      background-position: right 0.55rem center;
-      padding-right: 1.6rem;
+      background-position: right 0.45rem center;
+      padding-right: 1.4rem;
     }
-    select.filter-select:focus { outline: 2px solid var(--accent); }
+    select.filter-select:focus { outline: 1px solid var(--text); }
 
     /* Reset button */
     .btn-reset {
-      padding: 0.28rem 0.85rem;
-      border: 1px solid var(--border);
-      border-radius: 6px;
+      padding: 0.2rem 0.6rem;
+      border: 1px solid var(--rule);
+      border-radius: 0;
       background: #fff;
       color: var(--text-muted);
-      font-size: 0.8rem;
+      font-family: var(--sans);
+      font-size: 0.72rem;
       cursor: pointer;
-      transition: background 0.12s;
+      transition: background 0.1s;
       white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
-    .btn-reset:hover { background: #e5e9ec; color: var(--text); }
+    .btn-reset:hover { background: #f0f0f0; color: var(--text); }
 
     /* Results meta */
     .results-meta {
-      padding: 1rem 0 0.25rem;
-      font-size: 0.85rem;
+      padding: 1rem 0 0.5rem;
+      font-family: var(--sans);
+      font-size: 0.78rem;
       color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--rule);
     }
-    .results-count { font-weight: 600; color: var(--text); }
+    .results-count { font-weight: 700; color: var(--text); }
 
-    /* ── Bill grid ── */
+    /* ── Bill list ── */
     .bills-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
-      padding: 0.75rem 0 3rem;
-    }
-    @media (min-width: 680px) {
-      .bills-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (min-width: 1000px) {
-      .bills-grid { grid-template-columns: repeat(3, 1fr); }
+      padding: 0 0 3rem;
     }
 
-    /* ── Bill card ── */
+    /* ── Bill row (article-list style) ── */
     .bill-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.1rem 1.25rem;
+      border-bottom: 1px solid var(--rule);
+      padding: 1.25rem 0;
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
-      transition: box-shadow 0.15s;
+      gap: 0.4rem;
     }
-    .bill-card:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+    .bill-card:first-child {
+      border-top: none;
+    }
 
     .card-top {
       display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 0.5rem;
+      flex-direction: column;
+      gap: 0.25rem;
     }
     .card-title {
-      font-size: 0.95rem;
+      font-family: var(--serif);
+      font-size: 1.15rem;
       font-weight: 700;
-      line-height: 1.35;
+      line-height: 1.3;
       color: var(--text);
-      flex: 1;
     }
-
-    /* Level badge */
-    .level-badge {
-      display: inline-block;
-      padding: 0.15rem 0.55rem;
-      border-radius: 4px;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: #fff;
-      white-space: nowrap;
-      flex-shrink: 0;
-      margin-top: 0.1rem;
+    .card-title a {
+      color: var(--text);
+      text-decoration: none;
     }
-    .badge-federal   { background: var(--federal); }
-    .badge-state     { background: var(--state); }
-    .badge-county    { background: var(--county); }
-    .badge-municipal { background: var(--municipal); }
+    .card-title a:hover { text-decoration: underline; }
 
-    .card-meta {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.35rem;
-    }
-    .card-source { font-weight: 500; }
-    .meta-sep { color: #c0c5cc; }
-
-    /* Status chip */
-    .status-chip {
-      display: inline-block;
-      padding: 0.12rem 0.55rem;
-      border-radius: 4px;
-      font-size: 0.72rem;
-      font-weight: 600;
-    }
-    .chip-introduced  { background: var(--chip-intro-bg);  color: var(--chip-intro-text); }
-    .chip-committee   { background: var(--chip-commit-bg); color: var(--chip-commit-text); }
-    .chip-passed      { background: var(--chip-passed-bg); color: var(--chip-passed-text); }
-    .chip-enacted     { background: var(--chip-enacted-bg);color: var(--chip-enacted-text);}
-    .chip-other       { background: var(--chip-other-bg);  color: var(--chip-other-text); }
-
-    /* Summary preview */
+    /* Summary excerpt — italic serif */
     .card-summary {
-      font-size: 0.85rem;
-      color: #374151;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.92rem;
+      color: #333;
       line-height: 1.55;
     }
     .card-summary .truncated { display: block; }
     .card-summary .full      { display: none; }
     .card-summary.expanded .truncated { display: none; }
     .card-summary.expanded .full      { display: block; }
-    .expand-btn {
-      background: none;
-      border: none;
-      color: var(--text-link);
-      font-size: 0.8rem;
-      cursor: pointer;
-      padding: 0;
-      text-decoration: underline;
-      margin-top: 0.2rem;
+
+    /* Meta line — small caps sans-serif */
+    .card-meta {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-variant: small-caps;
+      letter-spacing: 0.04em;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.3rem;
     }
+    .card-source { color: var(--text); font-weight: 600; }
+    .meta-sep { color: #bbb; margin: 0 0.1rem; }
 
     /* Tags */
     .card-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.3rem;
+      gap: 0.25rem;
+      margin-top: 0.1rem;
     }
     .tag-chip {
-      background: #eef0f3;
-      color: #4b5563;
-      font-size: 0.7rem;
-      padding: 0.1rem 0.45rem;
-      border-radius: 4px;
+      font-family: var(--sans);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      border: 1px solid var(--rule);
+      padding: 0.05rem 0.35rem;
     }
 
-    /* Card actions */
+    /* Card actions — plain text links */
     .card-actions {
       display: flex;
-      gap: 0.5rem;
+      gap: 1rem;
       flex-wrap: wrap;
-      margin-top: auto;
-      padding-top: 0.25rem;
+      margin-top: 0.25rem;
     }
-    .btn {
-      display: inline-block;
-      padding: 0.35rem 0.75rem;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      font-weight: 500;
+    .card-actions a {
+      font-family: var(--sans);
+      font-size: 0.76rem;
+      color: var(--text);
       text-decoration: none;
-      cursor: pointer;
-      border: 1px solid transparent;
-      transition: background 0.12s, border-color 0.12s;
+      border-bottom: 1px solid var(--text);
+      padding-bottom: 0.05rem;
     }
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-    }
-    .btn-primary:hover { background: #154361; text-decoration: none; }
-    .btn-secondary {
-      background: #fff;
+    .card-actions a:hover { color: var(--wordmark); border-bottom-color: var(--wordmark); }
+    .expand-btn {
+      background: none;
+      border: none;
+      font-family: var(--sans);
+      font-size: 0.74rem;
       color: var(--text-muted);
-      border-color: var(--border);
+      cursor: pointer;
+      padding: 0;
+      text-decoration: underline;
     }
-    .btn-secondary:hover { background: var(--bg-subtle); color: var(--text); text-decoration: none; }
+    .expand-btn:hover { color: var(--text); }
 
     /* ── Empty state ── */
     .empty-state {
       display: none;
-      padding: 3rem 1.5rem;
-      text-align: center;
+      padding: 3rem 0;
       color: var(--text-muted);
-      background: var(--bg-subtle);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
       margin: 1rem 0;
     }
     .empty-state.visible { display: block; }
-    .empty-state h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--text); }
+    .empty-state h3 {
+      font-family: var(--serif);
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .empty-state p { font-family: var(--sans); font-size: 0.85rem; }
 
     /* ── Loading ── */
     .loading {
-      padding: 3rem;
-      text-align: center;
+      padding: 3rem 0;
+      font-family: var(--sans);
+      font-size: 0.85rem;
       color: var(--text-muted);
-    }
-
-    /* ── FAQ section ── */
-    #faq {
-      background: var(--bg-subtle);
-      border-top: 1px solid var(--border);
-      padding: 2.5rem 0 3rem;
-    }
-    #faq .container h2 {
-      font-size: 1.25rem;
-      margin-bottom: 1.25rem;
-      color: var(--text);
     }
 
     /* ── Footer ── */
     footer {
-      background: var(--text);
-      color: #9ca3af;
-      padding: 1.5rem;
-      font-size: 0.8rem;
-      text-align: center;
+      border-top: 2px solid var(--border);
+      padding: 1.5rem 0 2rem;
+      margin-top: 1rem;
+    }
+    footer .container {
+      font-family: var(--sans);
+      font-size: 0.75rem;
+      color: var(--text-muted);
       line-height: 1.8;
     }
-    footer a { color: #7ec8e3; }
-    footer a:hover { color: #fff; }
+    footer a { color: var(--text); }
+    footer a:hover { text-decoration: underline; }
+    .footer-credits {
+      margin-bottom: 0.5rem;
+    }
     .footer-disclaimer {
-      max-width: 650px;
-      margin: 0 auto 0.75rem;
+      font-style: italic;
+      color: var(--text-muted);
+      max-width: 640px;
     }
 
-    /* ── Responsive tweaks ── */
+    /* ── Responsive ── */
     @media (max-width: 520px) {
-      header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .wordmark { font-size: 2.2rem; }
+      .masthead-top { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
       .filter-label { display: none; }
     }
   </style>
 </head>
 <body>
 
-<!-- ── Header ── -->
-<header>
-  <div>
-    <a href="index.html" class="site-name">Plain<span>Law</span></a>
-    <div class="tagline">Proposed legislation in plain English</div>
+<!-- ── Masthead ── -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-top">
+      <a href="index.html" class="wordmark">Plain<span class="accent">Law</span></a>
+      <nav class="masthead-nav">
+        <a href="faq.html">About &amp; FAQ</a>
+        <a href="https://github.com/callmeradical/plain-law" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+    <div class="masthead-bottom">
+      <span class="masthead-tagline">Proposed legislation in plain English</span>
+      <span class="masthead-date" id="masthead-date"></span>
+    </div>
   </div>
-  <nav>
-    <a href="faq.html">About / FAQ</a>
-  </nav>
 </header>
 
-<!-- ── Disclaimer ── -->
-<div class="disclaimer">
-  <strong>⚠️ AI-generated summaries.</strong>
-  These are produced by a local Gemma language model and may contain errors.
-  Every summary links to its <strong>official source</strong> — always verify before acting on this information.
-  Plain Law is an independent personal project. Content does not represent the views of the operator, their employer, or any affiliated organization.
-  This is not legal advice.
+<!-- ── Editorial note (disclaimer) ── -->
+<div class="editorial-note">
+  <div class="container">
+    <strong>Editor's note:</strong> Summaries are generated by a local Gemma language model and may contain errors or omissions.
+    Every entry links to its <strong>official source</strong> — always verify before acting on this information.
+    Plain Law is an independent personal project and does not constitute legal advice.
+  </div>
 </div>
 
 <!-- ── Filter bar ── -->
@@ -454,7 +439,7 @@
           <option value="passed">Passed One Chamber</option>
           <option value="enacted">Enacted</option>
         </select>
-        <button class="btn-reset" id="reset-btn" title="Clear all filters">✕ Reset</button>
+        <button class="btn-reset" id="reset-btn" title="Clear all filters">Reset</button>
       </div>
     </div>
     <div class="filter-row" id="tag-row" style="display:none">
@@ -482,21 +467,21 @@
 
 <!-- ── Footer ── -->
 <footer>
-  <p class="footer-disclaimer">
-    Plain Law is an independent personal project. Summaries are generated by a local AI model.
-    The views, interpretations, and content on this site do not represent the opinions of the site operator, their employer, or any affiliated organization.
-    This is not legal advice. Always consult the official legislative source.
-  </p>
-  <p>
-    <a href="https://github.com/callmeradical/plain-law">GitHub</a> ·
-    <a href="https://github.com/callmeradical/plain-law/blob/main/CONTRIBUTING.md">Add your locale</a> ·
-    <a href="faq.html">FAQ</a>
-  </p>
-  <p style="margin-top:0.5rem;font-size:0.75rem;opacity:0.7">
-    State legislative data powered by <a href="https://legiscan.com" target="_blank" rel="noopener">LegiScan</a> (CC BY 4.0) ·
-    Federal data from <a href="https://api.congress.gov" target="_blank" rel="noopener">Congress.gov</a> (public domain) ·
-    Summaries generated by <a href="https://ollama.com/library/gemma3" target="_blank" rel="noopener">Gemma 3</a> via Ollama
-  </p>
+  <div class="container">
+    <p class="footer-credits">
+      <a href="https://github.com/callmeradical/plain-law">GitHub</a> ·
+      <a href="https://github.com/callmeradical/plain-law/blob/main/CONTRIBUTING.md">Add your locale</a> ·
+      <a href="faq.html">FAQ</a> ·
+      State data: <a href="https://legiscan.com" target="_blank" rel="noopener">LegiScan</a> (CC BY 4.0) ·
+      Federal data: <a href="https://api.congress.gov" target="_blank" rel="noopener">Congress.gov</a> (public domain) ·
+      Summaries: <a href="https://ollama.com/library/gemma3" target="_blank" rel="noopener">Gemma 3</a> via Ollama
+    </p>
+    <p class="footer-disclaimer">
+      Plain Law is an independent personal project. Summaries are AI-generated and may contain errors.
+      The content on this site does not represent the views of the operator, their employer, or any affiliated organization.
+      This is not legal advice. Always consult the official legislative source.
+    </p>
+  </div>
 </footer>
 
 <script>
@@ -504,6 +489,14 @@
    Plain Law — client-side filter SPA
    No dependencies. Works fully offline once bills.json loaded.
    ──────────────────────────────────────────────────────────── */
+
+// Set masthead date
+(function() {
+  const d = document.getElementById('masthead-date');
+  if (d) {
+    d.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  }
+})();
 
 let allBills = [];
 let activeFilters = {
@@ -675,54 +668,23 @@ function buildCard(bill) {
   const card = document.createElement('article');
   card.className = 'bill-card';
 
-  // Top row: title + badge
+  // Title
   const top = document.createElement('div');
   top.className = 'card-top';
 
-  const title = document.createElement('div');
+  const title = document.createElement('h3');
   title.className = 'card-title';
-  title.textContent = bill.title || '(Untitled)';
-
-  const badge = document.createElement('span');
-  badge.className = 'level-badge badge-' + (bill.level || 'federal');
-  badge.textContent = bill.level || 'federal';
-
+  if (bill.file) {
+    const titleLink = document.createElement('a');
+    titleLink.href = bill.file;
+    titleLink.textContent = bill.title || '(Untitled)';
+    title.appendChild(titleLink);
+  } else {
+    title.textContent = bill.title || '(Untitled)';
+  }
   top.appendChild(title);
-  top.appendChild(badge);
 
-  // Meta row: source + status chip + date
-  const meta = document.createElement('div');
-  meta.className = 'card-meta';
-
-  const src = document.createElement('span');
-  src.className = 'card-source';
-  src.textContent = bill.source || '';
-  meta.appendChild(src);
-
-  if (bill.status) {
-    const sep = document.createElement('span');
-    sep.className = 'meta-sep';
-    sep.textContent = '·';
-    meta.appendChild(sep);
-
-    const chip = document.createElement('span');
-    chip.className = 'status-chip ' + statusChipClass(bill.status);
-    chip.textContent = bill.status;
-    meta.appendChild(chip);
-  }
-
-  if (bill.status_date) {
-    const sep2 = document.createElement('span');
-    sep2.className = 'meta-sep';
-    sep2.textContent = '·';
-    meta.appendChild(sep2);
-
-    const dt = document.createElement('span');
-    dt.textContent = bill.status_date;
-    meta.appendChild(dt);
-  }
-
-  // Summary preview
+  // Summary excerpt — italic serif, 2-line preview
   const summaryWrap = document.createElement('div');
   summaryWrap.className = 'card-summary';
   const fullText = bill.summary || '';
@@ -744,12 +706,56 @@ function buildCard(bill) {
   if (needsExpand) {
     expandBtn = document.createElement('button');
     expandBtn.className = 'expand-btn';
-    expandBtn.textContent = 'Read more';
+    expandBtn.textContent = ' Read more';
     expandBtn.addEventListener('click', () => {
       const expanded = summaryWrap.classList.toggle('expanded');
-      expandBtn.textContent = expanded ? 'Show less' : 'Read more';
+      expandBtn.textContent = expanded ? ' Show less' : ' Read more';
     });
     summaryWrap.appendChild(expandBtn);
+  }
+
+  // Meta row: Source · Status · Date (small caps sans-serif)
+  const meta = document.createElement('div');
+  meta.className = 'card-meta';
+
+  if (bill.source) {
+    const src = document.createElement('span');
+    src.className = 'card-source';
+    src.textContent = bill.source;
+    meta.appendChild(src);
+  }
+
+  if (bill.status) {
+    const sep = document.createElement('span');
+    sep.className = 'meta-sep';
+    sep.textContent = '·';
+    meta.appendChild(sep);
+
+    const st = document.createElement('span');
+    st.textContent = bill.status;
+    meta.appendChild(st);
+  }
+
+  if (bill.status_date) {
+    const sep2 = document.createElement('span');
+    sep2.className = 'meta-sep';
+    sep2.textContent = '·';
+    meta.appendChild(sep2);
+
+    const dt = document.createElement('span');
+    dt.textContent = bill.status_date;
+    meta.appendChild(dt);
+  }
+
+  if (bill.level) {
+    const sep3 = document.createElement('span');
+    sep3.className = 'meta-sep';
+    sep3.textContent = '·';
+    meta.appendChild(sep3);
+
+    const lv = document.createElement('span');
+    lv.textContent = bill.level;
+    meta.appendChild(lv);
   }
 
   // Tags
@@ -765,22 +771,20 @@ function buildCard(bill) {
     });
   }
 
-  // Actions
+  // Actions — plain text links
   const actions = document.createElement('div');
   actions.className = 'card-actions';
 
   if (bill.file) {
     const summaryLink = document.createElement('a');
     summaryLink.href = bill.file;
-    summaryLink.className = 'btn btn-primary';
-    summaryLink.textContent = 'Read summary →';
+    summaryLink.textContent = 'Full summary →';
     actions.appendChild(summaryLink);
   }
 
   if (bill.url) {
     const srcLink = document.createElement('a');
     srcLink.href = bill.url;
-    srcLink.className = 'btn btn-secondary';
     srcLink.target = '_blank';
     srcLink.rel = 'noopener noreferrer';
     srcLink.textContent = 'Official source ↗';
@@ -789,8 +793,8 @@ function buildCard(bill) {
 
   // Assemble
   card.appendChild(top);
-  card.appendChild(meta);
   card.appendChild(summaryWrap);
+  card.appendChild(meta);
   if (tagsEl) card.appendChild(tagsEl);
   card.appendChild(actions);
 
